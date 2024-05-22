@@ -29,12 +29,12 @@ class HomeController extends Controller
     public function index()
     {
         $data['nama_menu'] = 'Dashboard';
-        $data['count_subjek'] = Subject::where('status',1)->count();
-        $data['count_arsip_foto'] = ArsipFoto::count();
-        $data['count_arsip_video'] = ArsipFoto::count();
-        $data['count_pustaka_buku'] = PustakaBuku::count();
-        $data['count_pustaka_video'] = PustakaVideo::count();
-        $data['count_pustaka_audio'] = PustakaAudio::count();
+        // $data['count_subjek'] = Subject::where('status',1)->count();
+        // $data['count_arsip_foto'] = ArsipFoto::count();
+        // $data['count_arsip_video'] = ArsipFoto::count();
+        // $data['count_pustaka_buku'] = PustakaBuku::count();
+        // $data['count_pustaka_video'] = PustakaVideo::count();
+        // $data['count_pustaka_audio'] = PustakaAudio::count();
         return view('home',$data);
     }
 

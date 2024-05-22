@@ -11,7 +11,7 @@
                 </div>
                 <div class="card-body pt-5">
                     <div class="text-center">
-                        <h4 class="fw-bold text-gray-800 m-0">{{number_format($count_subjek,0,',','.')}}</h4>
+                        <h4 class="fw-bold text-gray-800 m-0"></h4>
                     </div>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                 </div>
                 <div class="card-body pt-5">
                     <div class="text-center">
-                        <h4 class="fw-bold text-gray-800 m-0">{{number_format($count_arsip_foto,0,',','.')}}</h4>
+                        <h4 class="fw-bold text-gray-800 m-0"></h4>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="card-body pt-5">
                     <div class="text-center">
-                        <h4 class="fw-bold text-gray-800 m-0">{{number_format($count_arsip_video,0,',','.')}}</h4>
+                        <h4 class="fw-bold text-gray-800 m-0"></h4>
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="card-body pt-5">
                     <div class="text-center">
-                        <h4 class="fw-bold text-gray-800 m-0">{{number_format($count_pustaka_buku,0,',','.')}}</h4>
+                        <h4 class="fw-bold text-gray-800 m-0"></h4>
                     </div>
                 </div>
             </div>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="card-body pt-5">
                     <div class="text-center">
-                        <h4 class="fw-bold text-gray-800 m-0">{{number_format($count_pustaka_video,0,',','.')}}</h4>
+                        <h4 class="fw-bold text-gray-800 m-0"></h4>
                     </div>
                 </div>
             </div>
@@ -84,7 +84,7 @@
                 </div>
                 <div class="card-body pt-5">
                     <div class="text-center">
-                        <h4 class="fw-bold text-gray-800 m-0">{{number_format($count_pustaka_audio,0,',','.')}}</h4>
+                        <h4 class="fw-bold text-gray-800 m-0"></h4>
                     </div>
                 </div>
             </div>
