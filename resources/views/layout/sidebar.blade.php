@@ -6,9 +6,8 @@
     data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start"
     data-kt-drawer-toggle="#kt_aside_toggle">
     <div class="aside-logo flex-column-auto px-9 mb-9 mb-lg-17 mx-auto">
-        <img alt="Logo" src="{{asset('assets/media/logos/logo pusdikif.png')}}" style="height:100px;"class="logo img-logo theme-light-show">
                                         
-        <img alt="Logo" src="{{asset('assets/media/logos/Livra Logo.png')}}" style="height:100px;"class="logo img-logo theme-light-show">
+        <img alt="Logo" src="{{asset('assets/media/logos/aries.png')}}" style="height:100px;"class="logo img-logo theme-light-show">
     </div>
     <div class="aside-menu flex-column-fluid ps-3 ps-lg-5 pe-1 mb-9" id="kt_aside_menu">
         <div class="w-100 hover-scroll-y pe-2 me-2" id="kt_aside_menu_wrapper" data-kt-scroll="true"

@@ -17,7 +17,6 @@ class Permission extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $connection = 'pgsql2';
     protected $primaryKey = 'id';
     protected $table = 'permissions';
     protected $fillable = [

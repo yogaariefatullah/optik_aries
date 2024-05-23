@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>LIVRA</title>
+    <title>Aries Optical</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="{{ asset('assets/media/logos/Livra Logo.png') }}" rel="icon">
+    <link href="{{ asset('assets/media/logos/aries.png') }}" rel="icon">
     <link href="{{ asset('assets/landingpage/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">    
@@ -56,7 +56,7 @@
         <div class="container d-flex align-items-center justify-content-between">
 
             <div>
-                <h1 class="gradient">LIVRA</h1>
+                <h1 class="gradient">Aries Optical</h1>
             </div>
             <div>
                 <a class="btn btn btn-light" style=" background: -webkit-linear-gradient(#2F5D62, #60BEC8); color:white;" href="{{route('login')}}">Login</a>

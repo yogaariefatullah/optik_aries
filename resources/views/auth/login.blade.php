@@ -8,9 +8,9 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>LIVRA</title>
+        <title>Aries Optical</title>
 
-        <link href="{{ asset('assets/media/logos/Livra Logo.png') }}" rel="icon">
+        <link href="{{ asset('assets/media/logos/aries.png') }}" rel="icon">
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -64,9 +64,7 @@
                                 <h1 class="text-login">LOGIN</h1>
                                     
                                     <div class="class-logo mt-4 mb-4">
-                                            <img alt="Logo" src="{{asset('assets/media/logos/logo pusdikif.png')}}" class="h-200px logo theme-light-show">
-                                        
-                                            <img alt="Logo" src="{{asset('assets/media/logos/Livra Logo.png')}}" class="h-200px logo theme-light-show">
+                                            <img alt="Logo" src="{{asset('assets/media/logos/aries.png')}}" class="h-200px logo theme-light-show">
                                         
                                     </div>
                                 <form method="POST" action="{{ route('login') }}">
@@ -74,7 +72,7 @@
 
                                     <div class="row mb-3">
                                         <label for="email"
-                                            class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                                            class="col-md-4 col-form-label text-md-end">{{ __('Username') }}</label>
 
                                         <div class="col-md-6">
                                             <input id="email" type="text"
@@ -107,14 +105,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="row mb-3">
+                                    {{-- <div class="row mb-3">
                                         <div class="col-md-6 offset-md-4">
                                             <a class="btn btn-link"
                                                 href="{{ route('password.request') }}">
                                                 {{ __('Forgot Your Password?') }}
                                             </a>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="row mb-0">
                                         <div class="col-md-6 offset-md-4">

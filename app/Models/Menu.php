@@ -18,7 +18,6 @@ class Menu extends Authenticatable
      * @var array<int, string>
      */
     
-    protected $connection = 'pgsql2';
     protected $primaryKey = 'id';
     protected $table = 'menu';
     protected $fillable = [

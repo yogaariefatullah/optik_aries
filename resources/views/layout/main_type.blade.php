@@ -43,14 +43,14 @@
                             <a href="{{route('type')}}">
                                 <div class="logo-utama">
                                     <img alt="Logo" src="{{asset('assets/media/logos/logo pusdikif.png')}}" class="h-95px" />
-                                    <img alt="Logo" src="{{asset('assets/media/logos/Livra Logo.png')}}" class="h-95px" />
+                                    <img alt="Logo" src="{{asset('assets/media/logos/aries.png')}}" class="h-95px" />
                                 </div>
                             </a>
                         </div>
                         <div class="d-flex d-lg-none align-items-center ms-n4 me-2">		
                             <a href="{{route('type')}}">
                                 <img alt="Logo" src="{{asset('assets/media/logos/logo pusdikif.png')}}" class="h-60px" />
-                                <img alt="Logo" src="{{asset('assets/media/logos/Livra Logo.png')}}" class="h-60px" />
+                                <img alt="Logo" src="{{asset('assets/media/logos/aries.png')}}" class="h-60px" />
                             </a>
                         </div>
                         <div class="d-flex align-items-center flex-shrink-0">                                                        
