@@ -1,4 +1,5 @@
 <?php
+
 use App\Models\Menu;
 use App\Models\Permission;
 
@@ -8,16 +9,16 @@ if (!function_exists('getParentName')) {
         $menu = Menu::find($id);
         if ($menu) {
             return $menu->name;
-        }else{
+        } else {
             return "-";
         }
     }
 }
 
 if (!function_exists('getPermission')) {
-    function getPermission($id_group,$id_menu)
+    function getPermission($id_group, $id_menu)
     {
-        $permission = Permission::where('menu_id',$id_menu)->where('group_id',$id_group)->first();
+        $permission = Permission::where('menu_id', $id_menu)->where('group_id', $id_group)->first();
         return $permission;
     }
 }
@@ -25,7 +26,7 @@ if (!function_exists('getPermission')) {
 if (!function_exists('getAllMenu')) {
     function getAllMenu()
     {
-        $menu = Menu::whereNull('deleted_at')->orderBY('urutan','asc')->get();
+        $menu = Menu::whereNull('deleted_at')->orderBY('urutan', 'asc')->get();
         return $menu;
     }
 }
@@ -33,7 +34,13 @@ if (!function_exists('getAllMenu')) {
 if (!function_exists('getChild')) {
     function getChild($parent_id)
     {
-        $menu = Menu::where('parent_id',$parent_id)->whereNull('deleted_at')->orderBY('urutan','asc')->get();
+        $menu = Menu::where('parent_id', $parent_id)->whereNull('deleted_at')->orderBY('urutan', 'asc')->get();
         return $menu;
     }
-}   
+}
+if (!function_exists('formatRupiah')) {
+    function formatRupiah($number)
+    {
+        return 'Rp ' . number_format($number, 0, ',', '.');
+    }
+}

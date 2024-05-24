@@ -6,10 +6,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use App\User;
-use App\Models\Menu;
-use App\Models\Group;
-use App\Models\Permission;
+use App\Models\Cabang;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -21,7 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 
 
-class MasterGroupController extends Controller
+class MasterCabangController extends Controller
 {
     public function __construct()
     {
@@ -35,23 +32,23 @@ class MasterGroupController extends Controller
      */
     public function index(Request $request)
     {
-        
-        $data['nama_menu'] = 'Settings Group';
-        $query = Group::query();
+
+        $data['nama_menu'] = 'Setting Cabang';
+
+        $query = Cabang::query();
 
         // Periksa apakah ada parameter pencarian
         if ($request->has('search')) {
-            $query
-            ->where('name', 'ilike', '%' . $request->input('search') . '%')
-            ->Orwhere('name', 'ilike', '%' . $request->input('search') . '%');
-            
+            $searchTerm = '%' . strtolower($request->input('search')) . '%';
+            $query->where(function ($query) use ($searchTerm) {
+                $query->whereRaw('LOWER(cabang.nama_cabang) LIKE ?', [$searchTerm]);
+            });
         }
-        $query->whereNull('deleted_at');
-    
+
         // Ambil data subjek dengan paginate
-        $data['group'] = $query->paginate(5);
-        
-        return view('master.group.index', $data);
+        $data['cabang'] = $query->paginate(5);
+
+        return view('master.cabang.index', $data);
     }
 
     /**
@@ -61,7 +58,9 @@ class MasterGroupController extends Controller
      */
     public function create()
     {
+        $data['nama_menu'] = 'Settings Cabang';
 
+        return view('master.cabang.add', $data);
     }
 
     /**
@@ -72,7 +71,12 @@ class MasterGroupController extends Controller
      */
     public function store(Request $request)
     {
-        
+
+        Cabang::create([
+            'nama_cabang' => $request->nama_cabang
+        ]);
+        Session::flash('success', 'Data Berhasil di tambahkan.');
+        return redirect()->route('master.cabang.index');
     }
 
     /**
@@ -83,11 +87,7 @@ class MasterGroupController extends Controller
      */
     public function show($id)
     {
-        $data['nama_menu'] = 'Settings Group';
-        $data['group'] = Group::FindorFail($id);
-        $data['menu']  = Menu::orderBy('urutan', 'asc')->get();
-        $data['id_group'] = $id;
-        return view('master.group.show',$data);
+        //
     }
 
     /**
@@ -98,8 +98,12 @@ class MasterGroupController extends Controller
      */
     public function edit($id)
     {
-        
-    }   
+        $data['nama_menu'] = 'Settings Cabang';
+        $data['cabang'] = Cabang::findOrFail($id);
+
+
+        return view('master.cabang.edit', $data);
+    }
 
     /**
      * Update the specified resource in storage.
@@ -110,32 +114,15 @@ class MasterGroupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $arr = array();
-            
-        foreach ($request->id_menu as $key => $id_menu) {
-            $wj = "create".$id_menu;
-            $wj2 = "read".$id_menu;
-            $wj3 = "update".$id_menu;
-            $wj4 = "delete".$id_menu;
-            $wj5 = "view".$id_menu;
-            $wx = $request->$wj;
-            $wx2 = $request->$wj2;
-            $wx3 = $request->$wj3;
-            $wx4 = $request->$wj4;
-            $wx5 = $request->$wj5;
-            array_push($arr,array("group_id" => $id,
-                                "menu_id" => $id_menu,
-                                "c" => $wx,
-                                "r" => $wx2,
-                                "u" => $wx3,
-                                "d" => $wx4,
-                                "v" => $wx5,
-                                "created_at" => date('Y-m-d')));
-        }
-        //dd($arr);
-        Permission::where('group_id',$id)->delete();
-        Permission::insert($arr);	
-        return redirect()->route('master.group.index');
+
+
+        $menu = Cabang::findorFail($id);
+        $menu->update([
+            'nama_cabang' => $request->nama_cabang,
+        ]);
+
+        Session::flash('success', 'Data Berhasil di Edit.');
+        return redirect()->route('master.cabang.index');
     }
 
     /**
@@ -146,6 +133,10 @@ class MasterGroupController extends Controller
      */
     public function destroy($id)
     {
-    
+        // dd($id);
+        $cabang = Cabang::findOrFail($id);
+        $cabang->delete();
+
+        return redirect()->route('master.cabang.index')->with('success', 'Data Berhasil di Hapus.');
     }
 }

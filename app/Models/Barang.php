@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class PustakaVideo extends Authenticatable
+class Barang extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -17,20 +17,15 @@ class PustakaVideo extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $connection = 'pgsql2';
 
     protected $primaryKey = 'id';
-    protected $casts = [
-        'id' => 'string'
-    ];
-    protected $table = 'pustaka_video';
+    protected $table = 'barang';
     protected $fillable = [
-        'id',
-        'judul',
-        'id_subjek',
-        'cover',
-        'produksi',
-        'tahun_produksi',
-        'keterangan',
+        'kode_barang',
+        'jumlah_stok',
+        'harga_jual',
+        'harga_asli',
+        'nama_barang',
+        'cabang',
     ];
 }

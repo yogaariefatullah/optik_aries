@@ -4,10 +4,10 @@
     <div class="card mb-5 mb-xl-8">
         <div class="card-header border-0 pt-5">
             <h3 class="card-title align-items-start flex-column">
-                <span class="card-label fw-bold fs-3 mb-1">List Master Menu</span>
+                <span class="card-label fw-bold fs-3 mb-1">List Master cabang</span>
             </h3>
             <div class="card-toolbar">
-                <a href="{{ route('master.menu.create') }}"
+                <a href="{{ route('master.cabang.create') }}"
                     class="btn btn-sm btn-light-primary">
                     <i class="ki-duotone ki-plus fs-2"></i>Tambah Data</a>
             </div>
@@ -27,9 +27,9 @@
             <div class="table-responsive">
                 <div class="row mb-3">
                     <div class="col">
-                        <form action="{{ route('master.menu.index') }}" method="GET">
+                        <form action="{{ route('master.cabang.index') }}" method="GET">
                             <div class="input-group">
-                                <input type="text" name="search" class="form-control" placeholder="Search Menu...">
+                                <input type="text" name="search" class="form-control" placeholder="Search cabang...">
                                 <button type="submit" class="btn btn-primary">Cari</button>
                             </div>
                         </form>
@@ -39,31 +39,23 @@
                     <thead>
                         <tr class="fw-bold text-muted bg-light">
                             <th class="min-w-80px rounded-start">NO</th>
-                            <th class="min-w-200px">Nama</th>
-                            <th class="min-w-200px">Parent</th> 
-                            <th class="min-w-125px">URL</th>
-                            <th class="min-w-200px rounded-end">Action</th>
+                            <th class="min-w-200px">Nama Cabang</th>
+                            <th class="min-w-125px">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($menu as $key => $val)
+                        @foreach($cabang as $key => $val)
                         <tr>
                             <td>
-                             {{ ($menu->currentPage() - 1) * $menu->perPage() + $loop->index + 1 }}
+                             {{ ($cabang->currentPage() - 1) * $cabang->perPage() + $loop->index + 1 }}
                             </td>
                             <td>
-                                <span class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{$val->name}}</span>
+                                <span class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{$val->nama_cabang}}</span>
                             </td>
-                            <td>
-                                <span class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">
-                                    {{getParentName($val->parent_id)}}
-                                </span>
-                            </td>
-                            <td>
-                                <span class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{$val->url}}</span>
-                            </td>
-                            <td class="text-end">
-                                <a href="{{route('master.menu.edit', $val->id)}}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                           
+                            
+                            <td class="">
+                                <a href="{{route('master.cabang.edit', $val->id)}}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                     <i class="ki-solid ki-pencil fs-2">
                                     </i>
                                 </a>
@@ -86,11 +78,11 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        Apakah Anda yakin ingin menghapus Menu ini?
+                                        Apakah Anda yakin ingin menghapus cabang ini?
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                        <form action="{{ route('master.menu.destroy', $val->id) }}" method="POST">
+                                        <form action="{{ route('master.cabang.destroy', $val->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">Hapus</button>
@@ -103,7 +95,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $menu->onEachSide(1)->appends(array_merge(request()->query(), ['page' => $menu->currentPage()]))->links('pagination::bootstrap-5') }}
+                {{ $cabang->onEachSide(1)->appends(array_merge(request()->query(), ['page' => $cabang->currentPage()]))->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>

@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Group extends Authenticatable
+class Cabang extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -17,10 +17,10 @@ class Group extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $table = 'group';
-    protected $fillable = [
-        'name',
-        'keterangan'
-    ];
     
+    protected $primaryKey = 'id';
+    protected $table = 'cabang';
+    protected $fillable = [
+        'nama_cabang'
+    ];
 }
