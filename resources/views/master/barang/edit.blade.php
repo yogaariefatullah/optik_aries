@@ -45,7 +45,7 @@
                         <label class="col-2 col-form-label">Jenis Barang</label>
                         <label class="col-2 col-form-label">:</label>
                         <div class="col-8">
-                            <select name="jenis_barang" id="jenis_barang" aria-label="Select a Country"
+                            <select name="jenis" id="jenis_barang" aria-label="Select a Country"
                                 data-control="select2" data-placeholder="Select a Group..."
                                 class="form-select form-select-solid form-select-lg fw-semibold">
                                 @if ($barang->jenis_barang == '1')
