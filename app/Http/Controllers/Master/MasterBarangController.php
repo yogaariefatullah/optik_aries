@@ -89,6 +89,7 @@ class MasterBarangController extends Controller
                 'harga_jual' => $request->harga_jual,
                 'harga_asli' => $request->harga_asli,
                 'nama_barang' => $request->nama_barang,
+                'jenis_barang' => $request->jenis_barang,
                 'cabang' => $request->cabang
             ]);
             Session::flash('success', 'Data Berhasil di tambahkan.');
@@ -145,7 +146,8 @@ class MasterBarangController extends Controller
                 'harga_jual' => $request->harga_jual,
                 'harga_asli' => $request->harga_asli,
                 'nama_barang' => $request->nama_barang,
-                'cabang' => $request->cabang
+                'cabang' => $request->cabang,
+                'jenis_barang' => $request->jenis_barang
             ]);
             Session::flash('success', 'Data Berhasil di tambahkan.');
             return redirect()->route('master.barang.index');
