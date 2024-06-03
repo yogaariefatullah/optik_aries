@@ -42,17 +42,21 @@ class MasterBarangController extends Controller
         // Periksa apakah ada parameter pencarian
         if ($request->has('search')) {
             $searchTerm = '%' . strtolower($request->input('search')) . '%';
-            $query->where(function ($query) use ($searchTerm) {
+            $jenis = strtolower($request->input('search')) == 'lensa' ? 1 : (strtolower($request->input('search')) == 'frame' ? 2 : null);
+            $query->where(function ($query) use ($searchTerm, $jenis) {
                 $query->whereRaw('LOWER(barang.jumlah_stok) LIKE ?', [$searchTerm])
                     ->orWhereRaw('LOWER(barang.kode_barang) LIKE ?', [$searchTerm])
                     ->orWhereRaw('LOWER(barang.nama_barang) LIKE ?', [$searchTerm])
                     ->orWhereRaw('LOWER(cabang.nama_cabang) LIKE ?', [$searchTerm]);
             });
+            if ($jenis !== null) {
+                $query->orWhere('barang.jenis', $jenis);
+            }
         }
 
         // Ambil data subjek dengan paginate
-        $data['barang'] = $query->select('barang.*', 'cabang.id as id_cabang', 'cabang.nama_cabang')->paginate(5);
 
+        $data['barang'] = $query->select('barang.*', 'cabang.id as id_cabang', 'cabang.nama_cabang')->paginate(5);
         return view('master.barang.index', $data);
     }
 
@@ -77,6 +81,8 @@ class MasterBarangController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
+        // dd($request->jenis);
         $cek = Barang::where('kode_barang', $request->kode_barang)->count();
         // dd($cek);
         if ($cek > 0) {
@@ -89,7 +95,8 @@ class MasterBarangController extends Controller
                 'harga_jual' => $request->harga_jual,
                 'harga_asli' => $request->harga_asli,
                 'nama_barang' => $request->nama_barang,
-                'cabang' => $request->cabang
+                'cabang' => $request->cabang,
+                'jenis' => $request->jenis
             ]);
             Session::flash('success', 'Data Berhasil di tambahkan.');
             return redirect()->route('master.barang.index');
@@ -145,7 +152,8 @@ class MasterBarangController extends Controller
                 'harga_jual' => $request->harga_jual,
                 'harga_asli' => $request->harga_asli,
                 'nama_barang' => $request->nama_barang,
-                'cabang' => $request->cabang
+                'cabang' => $request->cabang,
+                'jenis' => $request->jenis
             ]);
             Session::flash('success', 'Data Berhasil di tambahkan.');
             return redirect()->route('master.barang.index');

@@ -16,7 +16,7 @@
                     <strong>Success </strong>{{ Session::get('success') }}
                 </div>
             @endif
-           
+
             @if (Session::has('error'))
                 <div class="alert alert-danger" role="alert">
                     <strong>Error </strong>{{ Session::get('error') }}
@@ -42,6 +42,7 @@
                                 <th class="min-w-80px rounded-start">NO</th>
                                 <th class="min-w-200px">Kode Barang</th>
                                 <th class="min-w-200px">Nama Barang</th>
+                                <th class="min-w-200px">Jenis Barang</th>
                                 <th class="min-w-200px">Nama Cabang</th>
                                 <th class="min-w-200px">Jumlah Stok</th>
                                 <th class="min-w-200px">Harga Jual</th>
@@ -64,6 +65,19 @@
                                             class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ $val->nama_barang }}</span>
                                     </td>
                                     <td>
+                                        <span class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">
+                                            @if ($val->jenis == 1)
+                                                Lensa
+                                            @elseif($val->jenis == 2)
+                                                Frame
+                                            @else
+                                            Jenis Tidak Di ketahui
+                                            @endif
+                                        </span>
+                                    </td>
+
+
+                                    <td>
                                         <span
                                             class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ $val->nama_cabang }}</span>
                                     </td>
@@ -76,7 +90,8 @@
                                             class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ formatRupiah($val->harga_jual) }}</span>
                                     </td>
                                     <td>
-                                        <span class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ formatRupiah($val->harga_asli) }}</span>
+                                        <span
+                                            class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ formatRupiah($val->harga_asli) }}</span>
 
                                     </td>
 

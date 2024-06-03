@@ -27,5 +27,6 @@ class Barang extends Authenticatable
         'harga_asli',
         'nama_barang',
         'cabang',
+        'jenis',
     ];
 }
