@@ -17,7 +17,9 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function(){
 //     return view('/sample'); //untuk sample view
 // }); 
-Route::get('/', 'UtilsController@index')->name('/');
+Route::get('/' ,function(){
+    return redirect('/login');
+});
 Route::get('/search-filter', 'UtilsController@searchFilter')->name('search-filter');
 
 Auth::routes();
@@ -33,8 +35,7 @@ Route::group(['middleware' => 'auth'], function (){
         Route::resource('cabang', 'MasterCabangController');
         Route::resource('barang', 'MasterBarangController');
     });
-    
- 
+    Route::resource('transaksi','TransaksiController');
 
 
     /******************************* */

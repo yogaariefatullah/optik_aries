@@ -104,6 +104,8 @@
     <script type="text/javascript" src="{{ asset('assets/flipbook/min_version/pdf.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/real3d-flip-book/js/flipbook.min.js') }}"></script>
     <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.9/jquery.inputmask.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/resumable.js/1.1.0/resumable.min.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
