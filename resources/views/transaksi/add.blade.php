@@ -93,7 +93,7 @@
                                 <div class="form-group row">
                                     <label class="col-4 col-form-label">T.Seg.</label>
                                     <div class="col-8">
-                                        <input class="form-control floatInput" type="text" value="" placeholder="pd" name="tseg_os" id="example-text-input" required />
+                                        <input class="form-control floatInput" type="text" value="" placeholder="tseg" name="tseg_os" id="example-text-input" required />
                                     </div>
                                 </div>
                             </td>
@@ -192,11 +192,13 @@
 
                 <hr>
 
-                <div class="row">
-                    <div class="col-6">
+                <div class="row container">
+                    <div class="d-flex justify-content-between">
                         <img alt="Logo" src="{{ asset('assets/media/logos/aries.png') }}"
                             style="height:100px;" class="logo img-logo theme-light-show">
+                        <label>No {{$no_transaksi}}</label>
                     </div>
+
                 </div>
                 &nbsp;
                 <div class="form-group row">

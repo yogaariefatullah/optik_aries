@@ -22,45 +22,56 @@
                 <strong>Success </strong>{{ Session::get('error') }}
             </div>
         @endif
-        @if($errors->has('subjek'))
-            <div class="alert alert-danger" role="alert">
-                <strong>{{ $errors->first('subjek') }}</strong>
-            </div>
-        @endif
 
         <div class="card-body py-3">
-            <div class="table-responsive">
-                <div class="row mb-3">
-                    <div class="col">
-                        <form action="{{ route('transaksi.index') }}" method="GET">
-                            <div class="input-group">
-                                <input type="text" name="search" class="form-control" placeholder="Search cabang...">
-                                <button type="submit" class="btn btn-primary">Cari</button>
-                            </div>
-                        </form>
-                    </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <form action="{{ route('transaksi.index') }}" method="GET">
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control" placeholder="Search transaksi...">
+                            <button type="submit" class="btn btn-primary">Cari</button>
+                        </div>
+                    </form>
                 </div>
+            </div>
+            <div class="table-responsive">
                 <table class="table align-middle gs-0 gy-4">
                     <thead>
                         <tr class="fw-bold text-muted bg-light">
                             <th class="min-w-80px rounded-start">NO</th>
-                            <th class="min-w-200px">Nama Cabang</th>
+                            <th class="min-w-200px">No Transaksi</th>
+                            <th class="min-w-200px">Nama</th>
+                            <th class="min-w-200px">Resep Dokter</th>
+                            <th class="min-w-200px">Lensa</th>
+                            <th class="min-w-200px">Frame</th>
                             <th class="min-w-125px">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($cabang as $key => $val)
+                        @foreach($transaksi as $key => $val)
                         <tr>
                             <td>
-                             {{ ($cabang->currentPage() - 1) * $cabang->perPage() + $loop->index + 1 }}
+                             {{ ($transaksi->currentPage() - 1) * $transaksi->perPage() + $loop->index + 1 }}
                             </td>
                             <td>
-                                <span class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{$val->nama_cabang}}</span>
+                                <span class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{$val->no_transaksi}}</span>
+                            </td>
+                            <td>
+                                <span class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{$val->nama}}</span>
+                            </td>
+                            <td>
+                                <span class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{$val->resep_dr}}</span>
+                            </td>
+                            <td>
+                                <span class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{$val->lensa_nama}}</span>
+                            </td>
+                            <td>
+                                <span class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{$val->frame_nama}}</span>
                             </td>
                            
                             
                             <td class="">
-                                <a href="{{route('master.cabang.edit', $val->id)}}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                <a href="{{route('transaksi.edit', $val->id)}}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                     <i class="ki-solid ki-pencil fs-2">
                                     </i>
                                 </a>
@@ -83,11 +94,11 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        Apakah Anda yakin ingin menghapus cabang ini?
+                                        Apakah Anda yakin ingin menghapus transaksi ini?
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                        <form action="{{ route('master.cabang.destroy', $val->id) }}" method="POST">
+                                        <form action="{{ route('transaksi.destroy', $val->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">Hapus</button>
@@ -100,7 +111,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $cabang->onEachSide(1)->appends(array_merge(request()->query(), ['page' => $cabang->currentPage()]))->links('pagination::bootstrap-5') }}
+                {{ $transaksi->onEachSide(1)->appends(array_merge(request()->query(), ['page' => $transaksi->currentPage()]))->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>
