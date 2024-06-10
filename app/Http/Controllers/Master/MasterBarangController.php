@@ -89,14 +89,24 @@ class MasterBarangController extends Controller
             Session::flash('error', 'Kode Barang Sudah Ada.');
             return redirect()->route('master.barang.index');
         } else {
-            Barang::create([
+            $barang = Barang::create([
                 'kode_barang' => $request->kode_barang,
                 'jumlah_stok' => $request->jumlah_stok,
                 'harga_jual' => $request->harga_jual,
                 'harga_asli' => $request->harga_asli,
                 'nama_barang' => $request->nama_barang,
                 'cabang' => $request->cabang,
+                'tgl' => $request->tgl,
                 'jenis' => $request->jenis
+            ]);
+            DB::table('rekap_barang_masuk')->insert([
+                'tanggal' =>  $request->tgl,
+                'jenis_barang' => $request->jenis,
+                'id_barang' => $barang->id,
+                'jumlah_barang' =>  $request->jumlah_stok,
+                'harga_modal' => $request->harga_asli,
+                'harga_jual' => $request->harga_jual,
+                'cabang_id' => $request->cabang
             ]);
             Session::flash('success', 'Data Berhasil di tambahkan.');
             return redirect()->route('master.barang.index');
@@ -153,7 +163,17 @@ class MasterBarangController extends Controller
                 'harga_asli' => $request->harga_asli,
                 'nama_barang' => $request->nama_barang,
                 'cabang' => $request->cabang,
-                'jenis' => $request->jenis
+                'jenis' => $request->jenis,
+                'tgl' => $request->tgl,
+            ]);
+            DB::table('rekap_barang_masuk')->where('id_barang', $id)->update([
+                'tanggal' =>  $request->tgl,
+                'jenis_barang' => $request->jenis,
+                'id_barang' => $id,
+                'jumlah_barang' =>  $request->jumlah_stok,
+                'harga_modal' => $request->harga_asli,
+                'harga_jual' => $request->harga_jual,
+                'cabang_id' => $request->cabang
             ]);
             Session::flash('success', 'Data Berhasil di tambahkan.');
             return redirect()->route('master.barang.index');
@@ -171,6 +191,7 @@ class MasterBarangController extends Controller
         // dd($id);
         $cabang = Barang::findOrFail($id);
         $cabang->delete();
+        DB::table('rekap_barang_masuk')->where('id_barang', $id)->delete();
 
         return redirect()->route('master.barang.index')->with('success', 'Menu berhasil dihapus.');
     }

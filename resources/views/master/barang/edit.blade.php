@@ -33,6 +33,15 @@
                     </div>
                     &nbsp;
                     <div class="form-group row">
+                        <label class="col-2 col-form-label">tanggal Barang Masuk</label>
+                        <label class="col-2 col-form-label">:</label>
+                        <div class="col-8">
+                            <input class="form-control" type="date" value="{{ $barang->tgl }}"
+                                name="tgl"id="example-text-input" required />
+                        </div>
+                    </div>
+                    &nbsp;
+                    <div class="form-group row">
                         <label class="col-2 col-form-label">Nama Barang</label>
                         <label class="col-2 col-form-label">:</label>
                         <div class="col-8">
@@ -48,11 +57,11 @@
                             <select name="jenis" id="jenis_barang" aria-label="Select a Country"
                                 data-control="select2" data-placeholder="Select a Group..."
                                 class="form-select form-select-solid form-select-lg fw-semibold">
-                                @if ($barang->jenis_barang == '1')
+                                @if ($barang->jenis == '1')
                                     <option value="0">Pilih Jenis Barang</option>
                                     <option value="1" selected="selected">Lensa</option>
                                     <option value="2">Frame</option>
-                                @elseif($barang->group_id == '2')
+                                @elseif($barang->jenis == '2')
                                     <option value="0">Pilih Jenis Barang</option>
                                     <option value="1">Lensa</option>
                                     <option value="2" selected="selected">Frame</option>

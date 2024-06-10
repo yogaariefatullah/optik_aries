@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Barang extends Authenticatable
+class RekapBarangMasuk extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -19,15 +19,14 @@ class Barang extends Authenticatable
      */
 
     protected $primaryKey = 'id';
-    protected $table = 'barang';
+    protected $table = 'rekap_barang_masuk';
     protected $fillable = [
-        'kode_barang',
-        'jumlah_stok',
+        'tanggal',
+        'jenis_barang',
+        'id_barang',
+        'jumlah_barang',
+        'harga_modal',
         'harga_jual',
-        'harga_asli',
-        'nama_barang',
-        'cabang',
-        'jenis',
-        'tgl'
+        'cabang_id'
     ];
 }

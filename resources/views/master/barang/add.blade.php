@@ -32,6 +32,15 @@
                     </div>
                     &nbsp;
                     <div class="form-group row">
+                        <label class="col-2 col-form-label">tanggal Barang Masuk</label>
+                        <label class="col-2 col-form-label">:</label>
+                        <div class="col-8">
+                            <input class="form-control" type="date" value=""
+                                name="tgl"id="example-text-input" required />
+                        </div>
+                    </div>
+                    &nbsp;
+                    <div class="form-group row">
                         <label class="col-2 col-form-label">Nama Barang</label>
                         <label class="col-2 col-form-label">:</label>
                         <div class="col-8">
