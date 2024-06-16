@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use DataTables;
 use App\Models\Activity;
 use App\Models\Barang;
+use App\Models\RekapBarangKeluar;
 use App\Models\Transaksi;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -110,7 +111,7 @@ class TransaksiController extends Controller
                 return redirect()->route('transaksi.index');
             }
         }
-        Transaksi::create([
+        $transaksi = Transaksi::create([
             'spher_od' => $request->spher_od,
             'cylders_od' => $request->cylders_od,
             'axis_od' => $request->axis_od,
@@ -149,9 +150,19 @@ class TransaksiController extends Controller
         Barang::where('jenis', 1)->where('id', $request->lensa_id)->update([
             'jumlah_stok' => $lensa->jumlah_stok - 1
         ]);
+        RekapBarangKeluar::insert([
+            'tanggal'=>date("Y-m-d", strtotime(str_replace('/', '-', $request->tanggal_selesai))),
+            'lensa'=>$request->lensa_id,
+            'frame'=>$request->frame_id,
+            'jumlah'=>str_replace(',', '', $request->jumlah),
+            'keterangan'=>$request->lain_lain,
+            'cabang_id'=>Auth::user()->cabang_id,
+            'id_transaksi' => $transaksi->id
+        ]);
 
         Session::flash('success', 'Data Berhasil di tambahkan.');
-        return redirect()->route('transaksi.index');
+        Session::flash('new-id', $transaksi->id);
+        return redirect()->route('transaksi.index') ->with('open_new_tab', true);
     }
 
     /**
@@ -254,6 +265,14 @@ class TransaksiController extends Controller
 
         ]);
 
+        RekapBarangKeluar::where('id_transaksi',$id)->update([
+            'tanggal'=>date("Y-m-d", strtotime(str_replace('/', '-', $request->tanggal_selesai))),
+            'lensa'=>$request->lensa_id,
+            'frame'=>$request->frame_id,
+            'jumlah'=>str_replace(',', '', $request->jumlah),
+            'keterangan'=>$request->lain_lain,
+        ]);
+
         Session::flash('success', 'Data Berhasil di Edit.');
         return redirect()->route('transaksi.index');
     }
@@ -279,5 +298,19 @@ class TransaksiController extends Controller
         $transaksi->delete();
 
         return redirect()->route('transaksi.index')->with('success', 'Data Berhasil di Hapus.');
+    }
+    public function print($id)
+    {
+        
+        $data['data_lensa'] = Barang::where('jenis', 1)->where('jumlah_stok', '>', 0)->where('cabang', Auth::user()->cabang_id)->get();
+        $data['data_frame'] = Barang::where('jenis', 2)->where('jumlah_stok', '>', 0)->where('cabang', Auth::user()->cabang_id)->get();
+        // $data['no_transaksi'] = Transaksi::where('id_cabang',Auth::user()->cabang_id)->max('no_transaksi');
+        $data['transaksi'] = Transaksi::find($id);
+        $data['text_lensa'] = Barang::where('id', $data['transaksi']->lensa_id)->first();
+        $data['text_frame'] = Barang::where('id', $data['transaksi']->frame_id)->first();
+        // $pdf = PDF::loadView('print_template', $data);
+        // return $pdf->download('contoh.pdf');
+
+        return view('print_template', $data);
     }
 }

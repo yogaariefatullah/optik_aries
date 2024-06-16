@@ -36,7 +36,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('barang', 'MasterBarangController');
     });
     Route::resource('rekap-barang-masuk', 'RekapBarangMasukController');
+    Route::resource('rekap-barang-keluar', 'RekapBarangKeluarController');
     Route::resource('transaksi', 'TransaksiController');
+    Route::get('/transaksi/print/{id}','TransaksiController@print')->name('transaksi.print');
 });
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

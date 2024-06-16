@@ -75,6 +75,10 @@
                                     <i class="ki-solid ki-pencil fs-2">
                                     </i>
                                 </a>
+                                <a href="{{route('transaksi.print', $val->id)}}" target="_blank" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                    <i class="ki-solid ki-exit-down fs-2">
+                                    </i>
+                                </a>
                                 <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"data-bs-toggle="modal" data-bs-target="#deleteModal{{$val->id}}">
                                     <i class="ki-solid ki-trash fs-2">
                                        
@@ -116,4 +120,13 @@
         </div>
     </div>
 </div>
+@endsection
+@section('javascript')
+@if(session('open_new_tab'))
+    <script>
+        // Buka tab baru untuk menampilkan detail transaksi
+        var newTab = window.open('{{ route("transaksi.print", Session::get("new-id")) }}', '_blank');
+        newTab.focus();
+    </script>
+@endif
 @endsection

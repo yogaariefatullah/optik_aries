@@ -196,7 +196,7 @@
                     <div class="d-flex justify-content-between">
                         <img alt="Logo" src="{{ asset('assets/media/logos/aries.png') }}"
                             style="height:100px;" class="logo img-logo theme-light-show">
-                        <label>No {{$no_transaksi}}</label>
+                        <label>No {{$no_transaksi ? $no_transaksi : 0 }}</label>
                     </div>
 
                 </div>
