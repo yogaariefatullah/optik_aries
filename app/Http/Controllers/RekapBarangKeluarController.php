@@ -17,6 +17,8 @@ use App\Models\RekapBarangKeluar;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
+use App\Exports\RekapKeluarExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class RekapBarangKeluarController extends Controller
@@ -45,8 +47,12 @@ class RekapBarangKeluarController extends Controller
                 $join->on('rekap_barang_keluar.frame', '=', 'frame.id')
                     ->where('frame.jenis', '=', 2);
             });
-        if (!empty($request->cabang)) {
-            $query->where('rekap_barang_keluar.cabang_id', $request->cabang);
+        if (Auth::user()->cabang_id == 0) {
+            if (!empty($request->cabang)) {
+                $query->where('rekap_barang_keluar.cabang_id', $request->cabang);
+            }
+        }else{
+            $query->where('rekap_barang_keluar.cabang_id', Auth::user()->cabang_id);
         }
         if (!empty($request->tgl)) {
             $query->where('rekap_barang_keluar.tanggal', $request->tgl);
@@ -63,4 +69,10 @@ class RekapBarangKeluarController extends Controller
         $data['cabang'] = Cabang::get();
         return view('rekap.index_keluar', $data);
     }
+    public function excels(Request $request)
+    {
+        $dates = $request->tgl ? $request->tgl : null;
+        return Excel::download(new RekapKeluarExport($dates), 'rekap_barang_keluar.xlsx');
+    }
+
 }

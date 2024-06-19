@@ -295,6 +295,9 @@ class TransaksiController extends Controller
         $frame->update([
             'jumlah_stok' => $frame->jumlah_stok + 1
         ]);
+        $rekapkeluar = RekapBarangKeluar::where('id_transaksi',$id)->first();
+
+        $rekapkeluar->delete();
         $transaksi->delete();
 
         return redirect()->route('transaksi.index')->with('success', 'Data Berhasil di Hapus.');

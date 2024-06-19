@@ -9,31 +9,51 @@
             </div>
 
             <div class="card-body py-3">
-                <div class="row mb-3">
+                <div class="row mb-3 d-flex justify-content-between">
                     <div class="col">
                         <form action="{{ route('rekap-barang-keluar.index') }}" method="GET">
                             <div class="input-group">
-                                <div class="form-group row" id="cabang" style="">
-                                    <div class=" col-12">
-                                        <select name="cabang" aria-label="Select a Country" data-control="select2"
-                                            data-placeholder="Select a Cabang..."
-                                            class="form-select form-select-solid form-select-lg fw-semibold">
-                                            <option value="0">Pilih Cabang</option>
-                                            @foreach ($cabang as $key => $value)
-                                                <option value="{{ $value->id }}">{{ $value->nama_cabang }}</option>
-                                            @endforeach
-                                        </select>
+                                @if(Auth::user()->cabang_id == 0)
+                                    <div class="form-group row" id="cabang" style="">
+                                        <div class=" col-12">
+                                            <select name="cabang" aria-label="Select a Country" data-control="select2"
+                                                data-placeholder="Select a Cabang..."
+                                                class="form-select form-select-solid form-select-lg fw-semibold">
+                                                <option value="0">Pilih bulan</option>
+                                                @foreach ($cabang as $key => $value)
+                                                    <option value="{{ $value->id }}">{{ $value->nama_cabang }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                                 <div class="form-group row" id="cabang" style="">
                                     <div class=" col-12">
                                         <input class="form-control" type="date" value=""
-                                            name="tgl"id="example-text-input" />
+                                            name="tgl" id="tgl-rekap" />
                                     </div>
                                 </div>
                                 <div class="form-group row" id="cabang" style="">
                                     <div class=" col-12">
                                         <button type="submit" class="btn btn-primary">Cari</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col">
+                        <form action="{{ route('rekap-barang-keluar.excels') }}" method="POST">
+                            @csrf
+                            <div class="input-group row">
+                                <div class="form-group row" id="cabang" style="">
+                                    <div class="col-6">
+                                        <input class="form-control" type="hidden" value=""
+                                            name="tgl"id="tgl-export" />
+                                    </div>
+                                    <div class="col-2">
+                                    </div>
+                                    <div class=" col-4">
+                                        <button type="submit" class="btn btn-primary">export</button>
                                     </div>
                                 </div>
                             </div>
@@ -92,4 +112,14 @@
             </div>
         </div>
     </div>
+@endsection
+@section('javascript')
+<script>
+    $(document).ready(function() {
+        $('#tgl-rekap').change(function() {
+            var tanggal = $(this).val();
+            $('#tgl-export').val(tanggal);
+        });
+    });
+</script>
 @endsection
