@@ -30,6 +30,7 @@
     <style type="text/css">
         @media print {
             @page {
+                size: A4; /* Set the page size to A4 */
                 margin: 0; /* Menghilangkan margin default */
             }
             header, footer {
@@ -104,18 +105,14 @@
         
 
     </style>
-    <div class="class">
     <div class="card" style="border:none;">
-        @if(Session::has('success'))
-            <div class="alert alert-success" role="alert">
-                <strong>Success </strong>{{ Session::get('success') }}
+            <div class="row container">
+                <div class="d-flex justify-content-between">
+                    <img alt="Logo" src="{{ asset('assets/media/logos/aries.png') }}"
+                        style="height:100px;" class="logo img-logo theme-light-show">
+                    </div>
+
             </div>
-        @endif
-        @if($errors->has('subjek'))
-            <div class="alert alert-danger" role="alert">
-                <strong>{{ $errors->first('subjek') }}</strong>
-            </div>
-        @endif
             <div class="card-body">
                 <style>
                     table {
@@ -283,10 +280,23 @@
                     <label class="col-2 col-form-label">Sisa : </label>
                     <label class="col-4 col-form-label">{{number_format($transaksi->sisa,0,',','.')}}</label>
                 </div>
+                <ul>
+                    <li>Pesanan sesudah 2 bulan tidak diambil perusahaan tidak bertanggung jawab</li>
+                    <li>Pesanan yg dibatalkan uang muka dianggap hilang</li>
+                    <li>Barang yang sudah dibeli tidak dapat dikembalikan/ditukar kecuali ada perjanjian</li>
+                </ul>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div class="row container">
+                    <div class="d-flex justify-content-between">
+                                <p>{{$transaksi->nama}}</p>
+                                <p>{{Auth::user()->nama}}</p>
+                    </div>    
+                </div>
             </div>
     </div>
-
-</div>
 <script src="{{asset('assets/js/scripts.bundle.js')}}"></script>
     <script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
     <script src="{{asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js')}}"></script>
