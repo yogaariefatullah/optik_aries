@@ -13,13 +13,13 @@
                     <div class="col">
                         <form action="{{ route('rekap-barang-keluar.index') }}" method="GET">
                             <div class="input-group">
-                                @if(Auth::user()->cabang_id == 0)
+                                @if (Auth::user()->cabang_id == 0)
                                     <div class="form-group row" id="cabang" style="">
                                         <div class=" col-12">
-                                            <select name="cabang" aria-label="Select a Country" data-control="select2"
-                                                data-placeholder="Select a Cabang..."
+                                            <select name="cabang" id="cabang_rekap" aria-label="Select a Country"
+                                                data-control="select2" data-placeholder="Select a Cabang..."
                                                 class="form-select form-select-solid form-select-lg fw-semibold">
-                                                <option value="0">Pilih bulan</option>
+                                                <option value="0">Pilih Cabang</option>
                                                 @foreach ($cabang as $key => $value)
                                                     <option value="{{ $value->id }}">{{ $value->nama_cabang }}</option>
                                                 @endforeach
@@ -29,8 +29,8 @@
                                 @endif
                                 <div class="form-group row" id="cabang" style="">
                                     <div class=" col-12">
-                                        <input class="form-control" type="date" value=""
-                                            name="tgl" id="tgl-rekap" />
+                                        <input class="form-control" type="date" value="" name="tgl"
+                                            id="tgl-rekap" />
                                     </div>
                                 </div>
                                 <div class="form-group row" id="cabang" style="">
@@ -45,8 +45,24 @@
                         <form action="{{ route('rekap-barang-keluar.excels') }}" method="POST">
                             @csrf
                             <div class="input-group row">
+                                @if (Auth::user()->cabang_id == 0)
+                                    <div class="form-group row d-none" id="cabang" style="">
+                                        <div class="col-4">
+                                            <select name="cabang_export" type="hidden" id="cabang_export"
+                                                aria-label="Select a Country" data-control="select2"
+                                                data-placeholder="Select a Cabang..."
+                                                class="form-select form-select-solid form-select-lg fw-semibold">
+                                                <option value="0">Pilih Cabang</option>
+                                                @foreach ($cabang as $key => $value)
+                                                    <option value="{{ $value->id }}">{{ $value->nama_cabang }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                @endif
+
                                 <div class="form-group row" id="cabang" style="">
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <input class="form-control" type="hidden" value=""
                                             name="tgl"id="tgl-export" />
                                     </div>
@@ -84,7 +100,8 @@
                                             class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ $val->tanggal }}</span>
                                     </td>
                                     <td>
-                                        <span class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{$val->frame_nama}}</span>
+                                        <span
+                                            class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ $val->frame_nama }}</span>
                                     </td>
                                     <td>
                                         <span
@@ -114,12 +131,16 @@
     </div>
 @endsection
 @section('javascript')
-<script>
-    $(document).ready(function() {
-        $('#tgl-rekap').change(function() {
-            var tanggal = $(this).val();
-            $('#tgl-export').val(tanggal);
+    <script>
+        $(document).ready(function() {
+            $('#tgl-rekap').change(function() {
+                var tanggal = $(this).val();
+                $('#tgl-export').val(tanggal);
+            });
+            $('#cabang_rekap').change(function() {
+                var cabang = $(this).val();
+                $('#cabang_export').val(cabang);
+            });
         });
-    });
-</script>
+    </script>
 @endsection

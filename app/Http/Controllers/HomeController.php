@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ArsipFoto;
-use App\Models\PustakaAudio;
-use App\Models\PustakaBuku;
-use App\Models\PustakaVideo;
-use App\Models\Subject;
+use App\Models\Cabang;
+use App\Models\Barang;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -29,13 +26,13 @@ class HomeController extends Controller
     public function index()
     {
         $data['nama_menu'] = 'Dashboard';
-        // $data['count_subjek'] = Subject::where('status',1)->count();
-        // $data['count_arsip_foto'] = ArsipFoto::count();
-        // $data['count_arsip_video'] = ArsipFoto::count();
+        $data['count_cabang'] = Cabang::count();
+        $data['count_lensa'] = Barang::where('jenis', 1)->sum('jumlah_stok');
+        $data['count_frame'] = Barang::where('jenis', 2)->sum('jumlah_stok');
         // $data['count_pustaka_buku'] = PustakaBuku::count();
         // $data['count_pustaka_video'] = PustakaVideo::count();
         // $data['count_pustaka_audio'] = PustakaAudio::count();
-        return view('home',$data);
+        return view('home', $data);
     }
 
     public function SelectType()

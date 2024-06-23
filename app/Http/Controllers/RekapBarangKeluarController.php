@@ -34,12 +34,11 @@ class RekapBarangKeluarController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {  
+    {
         $data['nama_menu'] = 'Rekap Barang Keluar';
         $model = RekapBarangKeluar::query();
 
-        $query = $model->leftJoin('cabang', 'cabang.id', '=', 'rekap_barang_keluar.cabang_id')->
-            leftJoin('barang as lensa', function ($join) {
+        $query = $model->leftJoin('cabang', 'cabang.id', '=', 'rekap_barang_keluar.cabang_id')->leftJoin('barang as lensa', function ($join) {
                 $join->on('rekap_barang_keluar.lensa', '=', 'lensa.id')
                     ->where('lensa.jenis', '=', 1);
             })
@@ -51,7 +50,7 @@ class RekapBarangKeluarController extends Controller
             if (!empty($request->cabang)) {
                 $query->where('rekap_barang_keluar.cabang_id', $request->cabang);
             }
-        }else{
+        } else {
             $query->where('rekap_barang_keluar.cabang_id', Auth::user()->cabang_id);
         }
         if (!empty($request->tgl)) {
@@ -72,7 +71,7 @@ class RekapBarangKeluarController extends Controller
     public function excels(Request $request)
     {
         $dates = $request->tgl ? $request->tgl : null;
-        return Excel::download(new RekapKeluarExport($dates), 'rekap_barang_keluar.xlsx');
+        $cabang_export = $request->cabang_export ? $request->cabang_export : null;
+        return Excel::download(new RekapKeluarExport($dates, $cabang_export), 'rekap_barang_keluar.xlsx');
     }
-
 }
