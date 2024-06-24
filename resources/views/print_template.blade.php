@@ -318,7 +318,7 @@
         </ul>
         <br>
         <br>
-        <br
+        <br>
         <div class="row container">
             <div class="d-flex justify-content-between">
                 <p>{{ $transaksi->nama }}</p>
