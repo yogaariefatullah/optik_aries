@@ -190,14 +190,14 @@
                 <tr>
                     <td colspan="3">
                         <div class="form-group row">
-                            <label class="col-2 col-form-label">Add</label>
-                            <label class="col-10 col-form-label">{{ $transaksi->add_od }}</label>
+                            <label class="col-4 col-form-label">Add</label>
+                            <label class="col-8 col-form-label">{{ $transaksi->add_od }}</label>
                         </div>
                     </td>
                     <td colspan="2">
                         <div class="form-group row">
-                            <label class="col-3 col-form-label">PD</label>
-                            <label class="col-9 col-form-label">{{ $transaksi->pd_od }}</label>
+                            <label class="col-4 col-form-label">PD</label>
+                            <label class="col-8 col-form-label">{{ $transaksi->pd_od }}</label>
                         </div>
                     </td>
                     <td colspan="2">
@@ -208,8 +208,8 @@
                     </td>
                     <td colspan="3">
                         <div class="form-group row">
-                            <label class="col-2 col-form-label">Add</label>
-                            <label class="col-10 col-form-label">{{ $transaksi->add_os }}</label>
+                            <label class="col-4 col-form-label">Add</label>
+                            <label class="col-8 col-form-label">{{ $transaksi->add_os }}</label>
                         </div>
                     </td>
 
@@ -245,6 +245,8 @@
                         <div class="form-group row">
                             <label class="col-2 col-form-label">Lain Lain : </label>
                             <label class="col-4 col-form-label">{{ $transaksi->lain_lain }}</label>
+                            <label class="col-2 col-form-label">Nama : </label>
+                            <label class="col-4 col-form-label">{{ $transaksi->nama }}</label>
                         </div>
                     </td>
                 </tr>
@@ -292,14 +294,14 @@
 
         <div class="form-group row">
             <label class="col-2 col-form-label">Lensa : </label>
-            <label class="col-4 col-form-label">{{ $text_lensa ? $text_lensa->nama_barang : 'Pribadi' }}"</label>
+            <label class="col-4 col-form-label">{{ $text_lensa ? $text_lensa->nama_barang : 'Pribadi' }}</label>
             <label class="col-2 col-form-label">Diskon : </label>
             <label class="col-4 col-form-label">{{ $transaksi->diskon }}</label>
         </div>
 
         <div class="form-group row">
             <label class="col-2 col-form-label">Frame : </label>
-            <label class="col-4 col-form-label">{{ $text_frame ? $text_frame->nama_barang : 'Pribadi' }}"</label>
+            <label class="col-4 col-form-label">{{ $text_frame ? $text_frame->nama_barang : 'Pribadi' }}</label>
 
             <label class="col-2 col-form-label">Uang Muka : </label>
             <label class="col-4 col-form-label">{{ number_format($transaksi->uang_muka, 0, ',', '.') }}</label>

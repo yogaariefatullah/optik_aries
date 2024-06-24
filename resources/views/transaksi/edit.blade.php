@@ -73,30 +73,42 @@
                         <tbody>
                             <tr>
                                 <td><input class="form-control floatInput" type="text" value="{{ $transaksi->spher_od }}"
-                                        placeholder="spher" name="spher_od" id="example-text-input" required /></td>
+                                        placeholder="spher" name="spher_od" id="example-text-input"  /></td>
                                 <td><input class="form-control floatInput" type="text"
                                         value="{{ $transaksi->cylders_od }}" placeholder="cylders" name="cylders_od"
-                                        id="example-text-input" required /></td>
-                                <td><input class="form-control floatInput" type="text" value="{{ $transaksi->axis_od }}"
-                                        placeholder="axis" name="axis_od" id="example-text-input" required /></td>
+                                        id="example-text-input"  /></td>
+                                <td>
+                                    <div class="form-group row">
+                                        <label class="col-2 col-form-label">x</label>
+                                        <div class="col-10">
+                                            <input class="form-control floatInput" type="text" value="{{ $transaksi->axis_od }}"
+                                            placeholder="axis" name="axis_od" id="example-text-input"  /></td>
+                                        </div>
+                                    </div>
                                 <td><input class="form-control floatInput" type="text" value="{{ $transaksi->prism_od }}"
-                                        placeholder="prism" name="prism_od" id="example-text-input" required /></td>
+                                        placeholder="prism" name="prism_od" id="example-text-input"  /></td>
                                 <td><input class="form-control floatInput" type="text" value="{{ $transaksi->base_od }}"
-                                        placeholder="base" name="base_od" id="example-text-input" required /></td>
+                                        placeholder="base" name="base_od" id="example-text-input"  /></td>
                                 <!-- atas od bawah os -->
                                 <td><input class="form-control floatInput" type="text"
                                         value="{{ $transaksi->spher_os }}" placeholder="spher" name="spher_os"
-                                        id="example-text-input" required /></td>
+                                        id="example-text-input"  /></td>
                                 <td><input class="form-control floatInput" type="text"
                                         value="{{ $transaksi->cylders_os }}" placeholder="cylders" name="cylders_os"
-                                        id="example-text-input" required /></td>
-                                <td><input class="form-control floatInput" type="text" value="{{ $transaksi->axis_os }}"
-                                        placeholder="axis" name="axis_os" id="example-text-input" required /></td>
+                                        id="example-text-input"  /></td>
+                                <td> 
+                                    <div class="form-group row">
+                                        <label class="col-2 col-form-label">x</label>
+                                        <div class="col-10">
+                                            <input class="form-control floatInput" type="text" value="{{ $transaksi->axis_os }}"
+                                            placeholder="axis" name="axis_os" id="example-text-input"  /></td>
+                                        </div>
+                                    </div>
                                 <td><input class="form-control floatInput" type="text"
                                         value="{{ $transaksi->prism_os }}" placeholder="prism" name="prism_os"
-                                        id="example-text-input" required /></td>
+                                        id="example-text-input"  /></td>
                                 <td><input class="form-control floatInput" type="text" value="{{ $transaksi->base_os }}"
-                                        placeholder="base" name="base_os" id="example-text-input" required /></td>
+                                        placeholder="base" name="base_os" id="example-text-input"  /></td>
                             </tr>
                             <tr>
                                 <td colspan="3">
@@ -105,7 +117,7 @@
                                         <div class="col-10">
                                             <input class="form-control floatInput" type="text"
                                                 value="{{ $transaksi->add_od }}" placeholder="add" name="add_od"
-                                                id="example-text-input" required />
+                                                id="example-text-input"  />
                                         </div>
                                     </div>
                                 </td>
@@ -115,7 +127,7 @@
                                         <div class="col-9">
                                             <input class="form-control floatInput" type="text"
                                                 value="{{ $transaksi->pd_od }}" placeholder="pd" name="pd_od"
-                                                id="example-text-input" required />
+                                                id="example-text-input"  />
                                         </div>
                                     </div>
                                 </td>
@@ -125,7 +137,7 @@
                                         <div class="col-8">
                                             <input class="form-control floatInput" type="text"
                                                 value="{{ $transaksi->tseg_os }}" placeholder="tseg" name="tseg_os"
-                                                id="example-text-input" required />
+                                                id="example-text-input"  />
                                         </div>
                                     </div>
                                 </td>
@@ -135,7 +147,7 @@
                                         <div class="col-10">
                                             <input class="form-control floatInput" type="text"
                                                 value="{{ $transaksi->add_os }}" placeholder="add" name="add_os"
-                                                id="example-text-input" required />
+                                                id="example-text-input"  />
                                         </div>
                                     </div>
                                 </td>
@@ -149,22 +161,21 @@
                                         <label class="col-2 col-form-label">Jenis Lensa</label>
                                         <div class="col-4">
                                             <input type="hidden" name="lensa_old" value="{{ $transaksi->lensa_id }}">
-                                            <select name="lensa_id" id="lensa_id" aria-label="Pilih Lensa"
-                                                data-control="select2" data-placeholder="Pilih Lensa..."
-                                                class="form-select form-select-solid form-select-lg fw-semibold">
-                                                <option value="">Pilih Lensa</option>
-                                                <option data-harga="0" value="">Pribadi</option>
+                                            <select name="lensa_id" id="lensa_id" aria-label="Pilih lensa"
+                                                    data-control="select2" data-placeholder="Pilih lensa..."
+                                                    class="form-select form-select-solid form-select-lg fw-semibold">
+                                                <option value="">Pilih lensa</option>
                                                 @foreach ($data_lensa as $key => $value)
-                                                    @if ($transaksi->lensa_id == $value->id)
-                                                        <option data-harga="{{ $value->harga_jual }}" selected
-                                                            value="{{ $value->id }}">{{ $value->nama_barang }}
-                                                        </option>
-                                                    @else
-                                                        <option data-harga="{{ $value->harga_jual }}"
-                                                            value="{{ $value->id }}">{{ $value->nama_barang }}
-                                                        </option>
-                                                    @endif
+                                                    <option data-harga="{{ $value->harga_jual }}"
+                                                            value="{{ $value->id }}"
+                                                            {{ $transaksi->lensa_id == $value->id ? 'selected' : '' }}>
+                                                        {{ $value->nama_barang }}
+                                                    </option>
                                                 @endforeach
+                                                <option data-harga="0" value="pribadi"
+                                                    {{ is_null($transaksi->lensa_id) || $transaksi->lensa_id == '' ? 'selected' : '' }}>
+                                                    Pribadi
+                                                </option>
                                             </select>
                                         </div>
 
@@ -193,20 +204,22 @@
                                         <div class="col-4">
                                             <input type="hidden" name="frame_old" value="{{ $transaksi->frame_id }}">
                                             <select name="frame_id" id="frame_id" aria-label="Pilih Frame"
-                                                data-control="select2" data-placeholder="Pilih Frame..."
-                                                class="form-select form-select-solid form-select-lg fw-semibold">
+                                                    data-control="select2" data-placeholder="Pilih Frame..."
+                                                    class="form-select form-select-solid form-select-lg fw-semibold">
                                                 <option value="">Pilih Frame</option>
                                                 @foreach ($data_frame as $key => $value)
                                                     <option data-harga="{{ $value->harga_jual }}"
-                                                        value="{{ $value->id }}"
-                                                        {{ $transaksi->frame_id == $value->id ? 'selected' : '' }}>
+                                                            value="{{ $value->id }}"
+                                                            {{ $transaksi->frame_id == $value->id ? 'selected' : '' }}>
                                                         {{ $value->nama_barang }}
                                                     </option>
                                                 @endforeach
-                                                <option data-harga="0" value=""
-                                                    {{ $transaksi->frame_id == 0 || $transaksi->frame_id == null ? 'selected' : '' }}>
-                                                    Pribadi</option>
+                                                <option data-harga="0" value="pribadi"
+                                                    {{ is_null($transaksi->frame_id) || $transaksi->frame_id == '' ? 'selected' : '' }}>
+                                                    Pribadi
+                                                </option>
                                             </select>
+
 
 
                                         </div>
@@ -238,6 +251,11 @@
                                                 value="{{ $transaksi->lain_lain }}" name="lain_lain"
                                                 id="example-text-input" />
                                         </div>
+                                        <label class="col-2 col-form-label">Nama </label>
+                                        <div class="col-4">
+                                            <input class="form-control" type="text"
+                                                value="{{ $transaksi->nama }}" id="nama" name="nama" />
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -264,8 +282,8 @@
                     <div class="form-group row">
                         <label class="col-2 col-form-label">Nama</label>
                         <div class="col-4">
-                            <input class="form-control" type="text" value="{{ $transaksi->nama }}" name="nama"
-                                id="example-text-input" required />
+                            <input class="form-control" type="text" value="{{ $transaksi->nama }}" 
+                                id="label_nama" disabled />
                         </div>
 
                         <label class="col-2 col-form-label">Tanggal Selesai</label>
@@ -284,7 +302,7 @@
                         <label class="col-2 col-form-label">Jam</label>
                         <div class="col-4">
                             <input class="form-control" type="time" value="{{ $transaksi->jam }}" name="jam"
-                                required />
+                                 />
                         </div>
                     </div>
                     &nbsp;
@@ -319,7 +337,7 @@
                         <label class="col-2 col-form-label">Diskon</label>
                         <div class="col-4">
                             <input class="form-control " id="diskon" type="text" value="{{ $transaksi->diskon }}"
-                                name="diskon" id="example-text-input" required />
+                                name="diskon" id="example-text-input"  />
                         </div>
 
                     </div>
@@ -333,7 +351,7 @@
                         <label class="col-2 col-form-label">Uang Muka</label>
                         <div class="col-4">
                             <input class="form-control uangs" id="uang_muka" type="text"
-                                value="{{ $transaksi->uang_muka }}" name="uang_muka" id="example-text-input" required />
+                                value="{{ $transaksi->uang_muka }}" name="uang_muka" id="example-text-input"  />
                         </div>
 
                     </div>
@@ -346,7 +364,7 @@
                         <label class="col-2 col-form-label">Sisa</label>
                         <div class="col-4">
                             <input class="form-control uangs" id="sisa" type="text"
-                                value="{{ $transaksi->sisa }}" name="sisa" id="example-text-input" required />
+                                value="{{ $transaksi->sisa }}" name="sisa" id="example-text-input"  />
                         </div>
 
                     </div>
@@ -363,6 +381,16 @@
 @endsection
 @section('javascript')
     <script>
+        $(document).ready(function() {
+            var frameSelect = $("#frame_id");
+            if (!frameSelect.val()) {
+                frameSelect.val("0").trigger('change');
+            }
+            var lensaSelect = $("#lensa_id");
+            if (!lensaSelect.val()) {
+                lensaSelect.val("0").trigger('change');
+            }
+        });
         $(document).ready(function() {
 
             $('.floatInput').inputmask({
@@ -417,6 +445,11 @@
             $('#jumlah').val(jumlah.toFixed(2));
             $("#label_frame").val(selectedText);
         });
+
+        $('#nama').on('input',function(){
+            var nama = $(this).val();
+            $('#label_nama').val(nama)
+        })
 
 
         $('#kt_td_picker_date_only_input1').on('change', function(e) {
