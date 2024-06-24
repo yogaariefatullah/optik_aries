@@ -104,7 +104,6 @@ class TransaksiController extends Controller
                 return redirect()->route('transaksi.index');
             }
         }
-
         if ($lensa) {
             if ($lensa->jumlah_stok < 1) {
                 Session::flash('error', 'Stok Lensa tidak ada');
@@ -142,27 +141,32 @@ class TransaksiController extends Controller
             'uang_muka' => str_replace(',', '', $request->uang_muka),
             'sisa' => str_replace(',', '', $request->sisa),
             'no_transaksi' => $no_transaksi ? $no_transaksi + 1 : 1,
-            'id_cabang' => Auth::user()->cabang_id
+            'id_cabang' => Auth::user()->cabang_id,
+            'diskon' => $request->diskon
         ]);
-        Barang::where('jenis', 2)->where('id', $request->frame_id)->update([
-            'jumlah_stok' => $frame->jumlah_stok - 1
-        ]);
-        Barang::where('jenis', 1)->where('id', $request->lensa_id)->update([
-            'jumlah_stok' => $lensa->jumlah_stok - 1
-        ]);
+        if ($frame) {
+            Barang::where('jenis', 2)->where('id', $request->frame_id)->update([
+                'jumlah_stok' => $frame->jumlah_stok - 1
+            ]);
+        }
+        if ($lensa) {
+            Barang::where('jenis', 1)->where('id', $request->lensa_id)->update([
+                'jumlah_stok' => $lensa->jumlah_stok - 1
+            ]);
+        }
         RekapBarangKeluar::insert([
-            'tanggal'=>date("Y-m-d", strtotime(str_replace('/', '-', $request->tanggal_selesai))),
-            'lensa'=>$request->lensa_id,
-            'frame'=>$request->frame_id,
-            'jumlah'=>str_replace(',', '', $request->jumlah),
-            'keterangan'=>$request->lain_lain,
-            'cabang_id'=>Auth::user()->cabang_id,
+            'tanggal' => date("Y-m-d", strtotime(str_replace('/', '-', $request->tanggal_selesai))),
+            'lensa' => $request->lensa_id,
+            'frame' => $request->frame_id,
+            'jumlah' => str_replace(',', '', $request->jumlah),
+            'keterangan' => $request->lain_lain,
+            'cabang_id' => Auth::user()->cabang_id,
             'id_transaksi' => $transaksi->id
         ]);
 
         Session::flash('success', 'Data Berhasil di tambahkan.');
         Session::flash('new-id', $transaksi->id);
-        return redirect()->route('transaksi.index') ->with('open_new_tab', true);
+        return redirect()->route('transaksi.index')->with('open_new_tab', true);
     }
 
     /**
@@ -262,15 +266,16 @@ class TransaksiController extends Controller
             'jumlah' => str_replace(',', '', $request->jumlah),
             'uang_muka' => str_replace(',', '', $request->uang_muka),
             'sisa' => str_replace(',', '', $request->sisa),
+            'diskon' => $request->diskon,
 
         ]);
 
-        RekapBarangKeluar::where('id_transaksi',$id)->update([
-            'tanggal'=>date("Y-m-d", strtotime(str_replace('/', '-', $request->tanggal_selesai))),
-            'lensa'=>$request->lensa_id,
-            'frame'=>$request->frame_id,
-            'jumlah'=>str_replace(',', '', $request->jumlah),
-            'keterangan'=>$request->lain_lain,
+        RekapBarangKeluar::where('id_transaksi', $id)->update([
+            'tanggal' => date("Y-m-d", strtotime(str_replace('/', '-', $request->tanggal_selesai))),
+            'lensa' => $request->lensa_id,
+            'frame' => $request->frame_id,
+            'jumlah' => str_replace(',', '', $request->jumlah),
+            'keterangan' => $request->lain_lain,
         ]);
 
         Session::flash('success', 'Data Berhasil di Edit.');
@@ -288,14 +293,18 @@ class TransaksiController extends Controller
         // dd($id);
         $transaksi = Transaksi::findOrFail($id);
         $lensa = Barang::find($transaksi->lensa_id);
-        $lensa->update([
-            'jumlah_stok' => $lensa->jumlah_stok + 1
-        ]);
+        if ($lensa) {
+            $lensa->update([
+                'jumlah_stok' => $lensa->jumlah_stok + 1
+            ]);
+        }
         $frame = Barang::find($transaksi->frame_id);
-        $frame->update([
-            'jumlah_stok' => $frame->jumlah_stok + 1
-        ]);
-        $rekapkeluar = RekapBarangKeluar::where('id_transaksi',$id)->first();
+        if ($frame) {
+            $frame->update([
+                'jumlah_stok' => $frame->jumlah_stok + 1
+            ]);
+        }
+        $rekapkeluar = RekapBarangKeluar::where('id_transaksi', $id)->first();
 
         $rekapkeluar->delete();
         $transaksi->delete();
@@ -304,7 +313,7 @@ class TransaksiController extends Controller
     }
     public function print($id)
     {
-        
+
         $data['data_lensa'] = Barang::where('jenis', 1)->where('jumlah_stok', '>', 0)->where('cabang', Auth::user()->cabang_id)->get();
         $data['data_frame'] = Barang::where('jenis', 2)->where('jumlah_stok', '>', 0)->where('cabang', Auth::user()->cabang_id)->get();
         // $data['no_transaksi'] = Transaksi::where('id_cabang',Auth::user()->cabang_id)->max('no_transaksi');

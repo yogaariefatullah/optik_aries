@@ -17,7 +17,7 @@ class Transaksi extends Authenticatable
      *
      * @var array<int, string>
      */
-    
+
     protected $primaryKey = 'id';
     protected $table = 'transaksi';
     protected $fillable = [
@@ -52,6 +52,6 @@ class Transaksi extends Authenticatable
         'sisa',
         'no_transaksi',
         'id_cabang',
-
+        'diskon'
     ];
 }
