@@ -86,6 +86,7 @@
                                 <th class="min-w-200px">Lensa</th>
                                 <th class="min-w-200px">Nama Cabang</th>
                                 <th class="min-w-200px">Jumlah</th>
+                                <th class="min-w-200px">No Telp</th>
                                 <th class="min-w-200px">Keterangan</th>
                             </tr>
                         </thead>
@@ -114,6 +115,11 @@
                                     <td>
                                         <span
                                             class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ formatRupiah($val->jumlah) }}</span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ $val->no_telp }}</span>
+
                                     </td>
                                     <td>
                                         <span

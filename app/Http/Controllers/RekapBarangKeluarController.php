@@ -39,13 +39,14 @@ class RekapBarangKeluarController extends Controller
         $model = RekapBarangKeluar::query();
 
         $query = $model->leftJoin('cabang', 'cabang.id', '=', 'rekap_barang_keluar.cabang_id')->leftJoin('barang as lensa', function ($join) {
-                $join->on('rekap_barang_keluar.lensa', '=', 'lensa.id')
-                    ->where('lensa.jenis', '=', 1);
-            })
+            $join->on('rekap_barang_keluar.lensa', '=', 'lensa.id')
+                ->where('lensa.jenis', '=', 1);
+        })
             ->leftJoin('barang as frame', function ($join) {
                 $join->on('rekap_barang_keluar.frame', '=', 'frame.id')
                     ->where('frame.jenis', '=', 2);
-            });
+            })
+            ->join('transaksi', 'transaksi.id', 'rekap_barang_keluar.id_transaksi');
         if (Auth::user()->cabang_id == 0) {
             if (!empty($request->cabang)) {
                 $query->where('rekap_barang_keluar.cabang_id', $request->cabang);
@@ -59,6 +60,7 @@ class RekapBarangKeluarController extends Controller
 
         $data['barang'] = $query->select(
             'rekap_barang_keluar.*',
+            'transaksi.no_telp',
             'lensa.nama_barang as lensa_nama',
             'frame.nama_barang as frame_nama',
             'cabang.id as id_cabang',
