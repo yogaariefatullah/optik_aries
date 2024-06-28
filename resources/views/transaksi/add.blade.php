@@ -224,6 +224,12 @@
                                             <input class="form-control" type="text" value="" name="lain_lain"
                                                 id="example-text-input" />
                                         </div>
+                                        <label class="col-2 col-form-label">Nama</label>
+                                        <div class="col-4">
+                                            <input class="form-control" type="text" value="" name="nama"
+                                                id="nama" />
+                                        </div>
+                                    
                                     </div>
                                 </td>
                             </tr>
@@ -251,7 +257,7 @@
                         <label class="col-2 col-form-label">Nama</label>
                         <div class="col-4">
                             <input class="form-control" type="text" value="" name="nama"
-                                id="example-text-input" />
+                                id="label_nama" disabled/>
                         </div>
 
                         <label class="col-2 col-form-label">Tanggal Selesai</label>
@@ -375,6 +381,11 @@
                 rightAlign: false
             });
         });
+
+        $('#nama').on('input',function(){
+            var nama = $(this).val();
+            $('#label_nama').val(nama)
+        })
 
 
         $("#lensa_id").change(function() {
