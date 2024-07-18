@@ -63,6 +63,8 @@ class RekapBarangKeluarController extends Controller
             'transaksi.no_telp',
             'lensa.nama_barang as lensa_nama',
             'frame.nama_barang as frame_nama',
+            'lensa.harga_asli as lensa_harga',
+            'frame.harga_asli as frame_harga',
             'cabang.id as id_cabang',
             'cabang.nama_cabang',
         )->paginate(5);

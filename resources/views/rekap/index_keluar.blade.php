@@ -83,7 +83,9 @@
                                 <th class="min-w-80px rounded-start">NO</th>
                                 <th class="min-w-200px">Tanggal</th>
                                 <th class="min-w-200px">Frame</th>
+                                <th class="min-w-200px">Harga Asli Frame</th>
                                 <th class="min-w-200px">Lensa</th>
+                                <th class="min-w-200px">Harga Asli Lensa</th>
                                 <th class="min-w-200px">Nama Cabang</th>
                                 <th class="min-w-200px">Jumlah</th>
                                 <th class="min-w-200px">No Telp</th>
@@ -106,7 +108,15 @@
                                     </td>
                                     <td>
                                         <span
+                                            class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ $val->frame_harga }}</span>
+                                    </td>
+                                    <td>
+                                        <span
                                             class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ $val->lensa_nama }}</span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ $val->lensa_harga }}</span>
                                     </td>
                                     <td>
                                         <span
