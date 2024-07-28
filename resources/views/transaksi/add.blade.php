@@ -412,31 +412,47 @@
         })
 
 
-        $("#lensa_id_kiri").change(function() {
+        // Inisialisasi previousHarga
+        var previousHarga = 0;
 
+        $("#lensa_id_kiri").change(function() {
             var selectedText = $("#lensa_id_kiri option:selected").text();
             var selectedHarga = $("#lensa_id_kiri option:selected").data('harga');
             var jumlahVal = $('#jumlah').val().replace(/,/g, '');
+
             if (isNaN(parseFloat(jumlahVal))) {
-                jumlahVal = 0
+                jumlahVal = 0;
             }
 
-            var jumlah = parseFloat(jumlahVal) + parseFloat(selectedHarga);
+            // Kurangi jumlah dengan previousHarga dan tambahkan selectedHarga baru
+            var jumlah = parseFloat(jumlahVal) - previousHarga + parseFloat(selectedHarga);
+
+            // Perbarui previousHarga dengan selectedHarga baru
+            previousHarga = parseFloat(selectedHarga);
 
             $('#jumlah').val(jumlah.toFixed(2));
             $("#label_lensa_kiri").val(selectedText);
         });
 
-        $("#lensa_id").change(function() {
 
+        // Inisialisasi previousHarga untuk lensa dan frame
+        var previousHargaLensa = 0;
+        var previousHargaFrame = 0;
+
+        $("#lensa_id").change(function() {
             var selectedText = $("#lensa_id option:selected").text();
             var selectedHarga = $("#lensa_id option:selected").data('harga');
             var jumlahVal = $('#jumlah').val().replace(/,/g, '');
+
             if (isNaN(parseFloat(jumlahVal))) {
-                jumlahVal = 0
+                jumlahVal = 0;
             }
 
-            var jumlah = parseFloat(jumlahVal) + parseFloat(selectedHarga);
+            // Kurangi jumlah dengan previousHargaLensa dan tambahkan selectedHarga baru
+            var jumlah = parseFloat(jumlahVal) - previousHargaLensa + parseFloat(selectedHarga);
+
+            // Perbarui previousHargaLensa dengan selectedHarga baru
+            previousHargaLensa = parseFloat(selectedHarga);
 
             $('#jumlah').val(jumlah.toFixed(2));
             $("#label_lensa").val(selectedText);
@@ -446,15 +462,21 @@
             var selectedText = $("#frame_id option:selected").text();
             var selectedHarga = $("#frame_id option:selected").data('harga');
             var jumlahVal = $('#jumlah').val().replace(/,/g, '');
+
             if (isNaN(parseFloat(jumlahVal))) {
-                jumlahVal = 0
+                jumlahVal = 0;
             }
 
-            var jumlah = parseFloat(jumlahVal) + parseFloat(selectedHarga);
+            // Kurangi jumlah dengan previousHargaFrame dan tambahkan selectedHarga baru
+            var jumlah = parseFloat(jumlahVal) - previousHargaFrame + parseFloat(selectedHarga);
+
+            // Perbarui previousHargaFrame dengan selectedHarga baru
+            previousHargaFrame = parseFloat(selectedHarga);
 
             $('#jumlah').val(jumlah.toFixed(2));
             $("#label_frame").val(selectedText);
         });
+
 
 
         $('#kt_td_picker_date_only_input1').on('change', function(e) {
