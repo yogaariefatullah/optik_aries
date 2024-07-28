@@ -38,6 +38,7 @@ class Transaksi extends Authenticatable
         'tseg_os',
 
         'lensa_id',
+        'lensa_id_kiri',
         'frame_id',
         'tanggal_selesai',
         'order_tanggal',

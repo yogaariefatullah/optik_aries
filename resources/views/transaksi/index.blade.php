@@ -42,7 +42,8 @@
                             <th class="min-w-200px">No Transaksi</th>
                             <th class="min-w-200px">Nama</th>
                             <th class="min-w-200px">Resep Dokter</th>
-                            <th class="min-w-200px">Lensa</th>
+                            <th class="min-w-200px">Lensa Kanan</th>
+                            <th class="min-w-200px">Lensa Kiri</th>
                             <th class="min-w-200px">Frame</th>
                             <th class="min-w-125px">Aksi</th>
                         </tr>
@@ -64,6 +65,9 @@
                             </td>
                             <td>
                                 <span class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{$val->lensa_nama}}</span>
+                            </td>
+                            <td>
+                                <span class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{$val->lensa_kiri}}</span>
                             </td>
                             <td>
                                 <span class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{$val->frame_nama}}</span>

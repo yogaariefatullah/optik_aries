@@ -46,12 +46,17 @@ class TransaksiController extends Controller
                 $join->on('transaksi.frame_id', '=', 'frame.id')
                     ->where('frame.jenis', '=', 2);
             })
+            ->leftJoin('barang as lensa_kiri', function ($join) {
+                $join->on('transaksi.lensa_id_kiri', '=', 'lensa_kiri.id')
+                    ->where('lensa_kiri.jenis', '=', 1);
+            })
             ->select(
                 'transaksi.id',
                 'transaksi.nama',
                 'transaksi.no_transaksi',
                 'transaksi.resep_dr',
                 'lensa.nama_barang as lensa_nama',
+                'lensa_kiri.nama_barang as lensa_kiri',
                 'frame.nama_barang as frame_nama'
             );
 
@@ -110,6 +115,7 @@ class TransaksiController extends Controller
                 return redirect()->route('transaksi.index');
             }
         }
+        // dd($request->uang_muka);
         $transaksi = Transaksi::create([
             'spher_od' => $request->spher_od,
             'cylders_od' => $request->cylders_od,
@@ -128,6 +134,7 @@ class TransaksiController extends Controller
             'tseg_os' => $request->tseg_os,
 
             'lensa_id' => $request->lensa_id,
+            'lensa_id_kiri' => $request->lensa_id_kiri,
             'frame_id' => $request->frame_id,
             'tanggal_selesai' => date("Y-m-d", strtotime(str_replace('/', '-', $request->tanggal_selesai))),
             'order_tanggal' => date("Y-m-d", strtotime(str_replace('/', '-', $request->order_tanggal))),
@@ -142,7 +149,7 @@ class TransaksiController extends Controller
             'sisa' => str_replace(',', '', $request->sisa),
             'no_transaksi' => $no_transaksi ? $no_transaksi + 1 : 1,
             'id_cabang' => Auth::user()->cabang_id,
-            'diskon' => $request->diskon
+            'diskon' => str_replace(',', '', $request->diskon)
         ]);
         if ($frame) {
             Barang::where('jenis', 2)->where('id', $request->frame_id)->update([
@@ -161,7 +168,9 @@ class TransaksiController extends Controller
             'jumlah' => str_replace(',', '', $request->jumlah),
             'keterangan' => $request->lain_lain,
             'cabang_id' => Auth::user()->cabang_id,
-            'id_transaksi' => $transaksi->id
+            'id_transaksi' => $transaksi->id,
+            'diskon' => str_replace(',', '', $request->diskon),
+            'lensa_id_kiri' => $request->lensa_id_kiri,
         ]);
 
         Session::flash('success', 'Data Berhasil di tambahkan.');
@@ -194,6 +203,7 @@ class TransaksiController extends Controller
         // $data['no_transaksi'] = Transaksi::where('id_cabang',Auth::user()->cabang_id)->max('no_transaksi');
         $data['transaksi'] = Transaksi::find($id);
         $data['text_lensa'] = Barang::where('id', $data['transaksi']->lensa_id)->first();
+        $data['text_lensa_kiri'] = Barang::where('id', $data['transaksi']->lensa_id_kiri)->first();
         $data['text_frame'] = Barang::where('id', $data['transaksi']->frame_id)->first();
 
 
@@ -266,15 +276,17 @@ class TransaksiController extends Controller
             'jumlah' => str_replace(',', '', $request->jumlah),
             'uang_muka' => str_replace(',', '', $request->uang_muka),
             'sisa' => str_replace(',', '', $request->sisa),
-            'diskon' => $request->diskon,
+            'diskon' => str_replace(',', '', $request->diskon),
 
         ]);
 
         RekapBarangKeluar::where('id_transaksi', $id)->update([
             'tanggal' => date("Y-m-d", strtotime(str_replace('/', '-', $request->tanggal_selesai))),
             'lensa' => $request->lensa_id,
+            'lensa_id_kiri' => $request->lensa_id_kiri,
             'frame' => $request->frame_id,
             'jumlah' => str_replace(',', '', $request->jumlah),
+            'diskon' => str_replace(',', '', $request->diskon),
             'keterangan' => $request->lain_lain,
         ]);
 
@@ -319,6 +331,7 @@ class TransaksiController extends Controller
         // $data['no_transaksi'] = Transaksi::where('id_cabang',Auth::user()->cabang_id)->max('no_transaksi');
         $data['transaksi'] = Transaksi::find($id);
         $data['text_lensa'] = Barang::where('id', $data['transaksi']->lensa_id)->first();
+        $data['text_lensa_kiri'] = Barang::where('id', $data['transaksi']->lensa_id_kiri)->first();
         $data['text_frame'] = Barang::where('id', $data['transaksi']->frame_id)->first();
         // $pdf = PDF::loadView('print_template', $data);
         // return $pdf->download('contoh.pdf');

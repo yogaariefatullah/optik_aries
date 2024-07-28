@@ -46,6 +46,10 @@ class RekapBarangKeluarController extends Controller
                 $join->on('rekap_barang_keluar.frame', '=', 'frame.id')
                     ->where('frame.jenis', '=', 2);
             })
+            ->leftJoin('barang as lensa_kiri', function ($join) {
+                $join->on('rekap_barang_keluar.lensa_id_kiri', '=', 'lensa_kiri.id')
+                    ->where('lensa_kiri.jenis', '=', 1);
+            })
             ->join('transaksi', 'transaksi.id', 'rekap_barang_keluar.id_transaksi');
         if (Auth::user()->cabang_id == 0) {
             if (!empty($request->cabang)) {
@@ -62,9 +66,11 @@ class RekapBarangKeluarController extends Controller
             'rekap_barang_keluar.*',
             'transaksi.no_telp',
             'lensa.nama_barang as lensa_nama',
+            'lensa_kiri.nama_barang as lensa_nama_kiri',
             'frame.nama_barang as frame_nama',
             'lensa.harga_asli as lensa_harga',
             'frame.harga_asli as frame_harga',
+            'lensa_kiri.harga_asli as lensa_kiri_harga',
             'cabang.id as id_cabang',
             'cabang.nama_cabang',
         )->paginate(5);

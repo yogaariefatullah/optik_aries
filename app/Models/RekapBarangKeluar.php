@@ -28,6 +28,8 @@ class RekapBarangKeluar extends Authenticatable
         'jumlah',
         'keterangan',
         'cabang_id',
-        'id_transaksi'
+        'id_transaksi',
+        'diskon',
+        'lensa_id_kiri'
     ];
 }

@@ -219,12 +219,24 @@
                 <tr>
                     <td colspan="10">
                         <div class="form-group row">
-                            <label class="col-2 col-form-label">Jenis Lensa : </label>
+                            <label class="col-2 col-form-label">Jenis Lensa Kanan : </label>
                             <label
                                 class="col-4 col-form-label">{{ $text_lensa ? $text_lensa->nama_barang : 'Pribadi' }}"</label>
 
                             <label class="col-2 col-form-label">Order Tanggal : </label>
                             <label class="col-4 col-form-label">{{ $transaksi->order_tanggal }}</label>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="10">
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label">Jenis Lensa Kiri : </label>
+                            <label
+                                class="col-4 col-form-label">{{ $text_lensa_kiri ? $text_lensa->nama_barang : 'Pribadi' }}"</label>
+
+
                         </div>
                     </td>
                 </tr>
@@ -293,22 +305,23 @@
         </div>
 
         <div class="form-group row">
-            <label class="col-2 col-form-label">Lensa : </label>
+            <label class="col-2 col-form-label">Lensa Kanan : </label>
             <label class="col-4 col-form-label">{{ $text_lensa ? $text_lensa->nama_barang : 'Pribadi' }}</label>
             <label class="col-2 col-form-label">Diskon : </label>
             <label class="col-4 col-form-label">{{ $transaksi->diskon }}</label>
         </div>
 
         <div class="form-group row">
-            <label class="col-2 col-form-label">Frame : </label>
-            <label class="col-4 col-form-label">{{ $text_frame ? $text_frame->nama_barang : 'Pribadi' }}</label>
-
+         
+            
+            <label class="col-2 col-form-label">Lensa Kiri : </label>
+            <label class="col-4 col-form-label">{{ $text_lensa_kiri ? $text_lensa->nama_barang : 'Pribadi' }}</label>
             <label class="col-2 col-form-label">Uang Muka : </label>
             <label class="col-4 col-form-label">{{ number_format($transaksi->uang_muka, 0, ',', '.') }}</label>
         </div>
         <div class="form-group row">
-            <label class="col-2 col-form-label"> </label>
-            <label class="col-4 col-form-label"></label>
+            <label class="col-2 col-form-label">Frame : </label>
+            <label class="col-4 col-form-label">{{ $text_frame ? $text_frame->nama_barang : 'Pribadi' }}</label>
 
             <label class="col-2 col-form-label">Sisa : </label>
             <label class="col-4 col-form-label">{{ number_format($transaksi->sisa, 0, ',', '.') }}</label>

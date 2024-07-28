@@ -151,7 +151,7 @@
                             <tr>
                                 <td colspan="10">
                                     <div class="form-group row">
-                                        <label class="col-2 col-form-label">Jenis Lensa</label>
+                                        <label class="col-2 col-form-label">Jenis Lensa Kanan</label>
                                         <div class="col-4">
                                             <select name="lensa_id" id="lensa_id" aria-label="Pilih Lensa"
                                                 data-control="select2" data-placeholder="Pilih Lensa..."
@@ -182,176 +182,200 @@
                                     </div>
                                 </td>
                             </tr>
+
                             <tr>
                                 <td colspan="10">
                                     <div class="form-group row">
-                                        <label class="col-2 col-form-label">Jenis Frame</label>
+                                        <label class="col-2 col-form-label">Jenis Lensa Kiri</label>
                                         <div class="col-4">
-                                            <select name="frame_id" id="frame_id" aria-label="Pilih Frame"
-                                                data-control="select2" data-placeholder="Pilih Frame..."
+                                            <select name="lensa_id_kiri" id="lensa_id_kiri" aria-label="Pilih Lensa"
+                                                data-control="select2" data-placeholder="Pilih Lensa..."
                                                 class="form-select form-select-solid form-select-lg fw-semibold">
-                                                <option value="">Pilih Frame</option>
+                                                <option value="">Pilih Lensa</option>
                                                 <option data-harga="0" value="0">Pribadi</option>
-                                                @foreach ($data_frame as $key => $value)
+                                                @foreach ($data_lensa as $key => $value)
                                                     <option data-harga="{{ $value->harga_jual }}"
                                                         value="{{ $value->id }}">{{ $value->nama_barang }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
 
-                                        <label class="col-2 col-form-label">Tanggal Selesai</label>
-                                        <div class="col-4">
-                                            <div class="input-group" id="kt_td_picker_date_only_1"
-                                                data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                <input id="kt_td_picker_date_only_input1" name="tanggal_selesai"
-                                                    type="text" class="form-control"
-                                                    data-td-target="#kt_td_picker_date_only_1" />
-                                                <span class="input-group-text" data-td-target="#kt_td_picker_date_only_1"
-                                                    data-td-toggle="datetimepicker">
-                                                    <i class="ki-duotone ki-calendar fs-2"><span
-                                                            class="path1"></span><span class="path2"></span></i>
-                                                </span>
-                                            </div>
-                                        </div>
+
                                     </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="10">
-                                    <div class="form-group row">
-                                        <label class="col-2 col-form-label">Lain Lain</label>
-                                        <div class="col-4">
-                                            <input class="form-control" type="text" value="" name="lain_lain"
-                                                id="example-text-input" />
-                                        </div>
-                                        <label class="col-2 col-form-label">Nama</label>
-                                        <div class="col-4">
-                                            <input class="form-control" type="text" value="" name="nama"
-                                                id="nama" />
-                                        </div>
-                                    
-                                    </div>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                </div>
+                </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label">Jenis Frame</label>
+                            <div class="col-4">
+                                <select name="frame_id" id="frame_id" aria-label="Pilih Frame" data-control="select2"
+                                    data-placeholder="Pilih Frame..."
+                                    class="form-select form-select-solid form-select-lg fw-semibold">
+                                    <option value="">Pilih Frame</option>
+                                    <option data-harga="0" value="0">Pribadi</option>
+                                    @foreach ($data_frame as $key => $value)
+                                        <option data-harga="{{ $value->harga_jual }}" value="{{ $value->id }}">
+                                            {{ $value->nama_barang }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
-
-
-                    &nbsp;
-
-                    &nbsp;
-
-                    <hr>
-
-                    <div class="row container">
-                        <div class="d-flex justify-content-between">
-                            <img alt="Logo" src="{{ asset('assets/media/logos/aries.png') }}" style="height:100px;"
-                                class="logo img-logo theme-light-show">
-                            <label>No {{ $no_transaksi ? $no_transaksi : 0 }}</label>
+                            <label class="col-2 col-form-label">Tanggal Selesai</label>
+                            <div class="col-4">
+                                <div class="input-group" id="kt_td_picker_date_only_1" data-td-target-input="nearest"
+                                    data-td-target-toggle="nearest">
+                                    <input id="kt_td_picker_date_only_input1" name="tanggal_selesai" type="text"
+                                        class="form-control" data-td-target="#kt_td_picker_date_only_1" />
+                                    <span class="input-group-text" data-td-target="#kt_td_picker_date_only_1"
+                                        data-td-toggle="datetimepicker">
+                                        <i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span
+                                                class="path2"></span></i>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label">Lain Lain</label>
+                            <div class="col-4">
+                                <input class="form-control" type="text" value="" name="lain_lain"
+                                    id="example-text-input" />
+                            </div>
+                            <label class="col-2 col-form-label">Nama</label>
+                            <div class="col-4">
+                                <input class="form-control" type="text" value="" name="nama"
+                                    id="nama" />
+                            </div>
 
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+                </table>
+
+
+
+                &nbsp;
+
+                &nbsp;
+
+                <hr>
+
+                <div class="row container">
+                    <div class="d-flex justify-content-between">
+                        <img alt="Logo" src="{{ asset('assets/media/logos/aries.png') }}" style="height:100px;"
+                            class="logo img-logo theme-light-show">
+                        <label>No {{ $no_transaksi ? $no_transaksi : 0 }}</label>
                     </div>
-                    &nbsp;
-                    <div class="form-group row">
-                        <label class="col-2 col-form-label">Nama</label>
-                        <div class="col-4">
-                            <input class="form-control" type="text" value="" name="nama"
-                                id="label_nama" disabled/>
-                        </div>
 
-                        <label class="col-2 col-form-label">Tanggal Selesai</label>
-                        <div class="col-4">
-                            <input class="form-control" type="text" disabled id="label_tanggal" />
-                        </div>
+                </div>
+                &nbsp;
+                <div class="form-group row">
+                    <label class="col-2 col-form-label">Nama</label>
+                    <div class="col-4">
+                        <input class="form-control" type="text" value="" name="nama" id="label_nama"
+                            disabled />
                     </div>
-                    &nbsp;
-                    <div class="form-group row">
-                        <label class="col-2 col-form-label">Alamat</label>
-                        <div class="col-4">
-                            <textarea name="alamat" class="form-control" id=""></textarea>
-                        </div>
 
-                        <label class="col-2 col-form-label">Jam</label>
-                        <div class="col-4">
-                            <input class="form-control" type="time" value="00:00" name="jam" />
-                        </div>
+                    <label class="col-2 col-form-label">Tanggal Selesai</label>
+                    <div class="col-4">
+                        <input class="form-control" type="text" disabled id="label_tanggal" />
                     </div>
-                    &nbsp;
-                    <div class="form-group row">
-                        <label class="col-2 col-form-label">Telepon</label>
-                        <div class="col-4">
-                            <input class="form-control" type="text" value="" name="no_telp"
-                                id="example-text-input" />
-                        </div>
+                </div>
+                &nbsp;
+                <div class="form-group row">
+                    <label class="col-2 col-form-label">Alamat</label>
+                    <div class="col-4">
+                        <textarea name="alamat" class="form-control" id=""></textarea>
                     </div>
-                    &nbsp;
-                    <div class="form-group row">
-                        <label class="col-2 col-form-label">Resep dr./ref</label>
-                        <div class="col-4">
-                            <input class="form-control" type="text" value="" name="resep_dr"
-                                id="example-text-input" />
-                        </div>
 
-                        <label class="col-2 col-form-label">Jumlah</label>
-                        <div class="col-4">
-                            <input class="form-control uangs" id="jumlah" type="text" value="0"
-                                name="jumlah" id="example-text-input" readonly />
-                        </div>
+                    <label class="col-2 col-form-label">Jam</label>
+                    <div class="col-4">
+                        <input class="form-control" type="time" value="00:00" name="jam" />
                     </div>
-                    &nbsp;
-                    <div class="form-group row">
-                        <label class="col-2 col-form-label">Lensa</label>
-                        <div class="col-4">
-                            <input class="form-control" disabled type="text" id="label_lensa" />
-                        </div>
-                        <label class="col-2 col-form-label">Diskon</label>
-                        <div class="col-2">
-                            <input class="form-control uangs" id="diskon" type="text" value="0"
-                                name="diskon" id="example-text-input" />
-                        </div>
-                        <div class="col-2">
-                            <input class="form-control" type="text" value="%" id="example-text-input"
-                                disabled />
-                        </div>
-
-
+                </div>
+                &nbsp;
+                <div class="form-group row">
+                    <label class="col-2 col-form-label">Telepon</label>
+                    <div class="col-4">
+                        <input class="form-control" type="text" value="" name="no_telp"
+                            id="example-text-input" />
                     </div>
-                    &nbsp;
-                    <div class="form-group row">
-                        <label class="col-2 col-form-label">Frame</label>
-                        <div class="col-4">
-                            <input class="form-control" disabled type="text" id="label_frame" />
-                        </div>
-
-                        <label class="col-2 col-form-label">Uang Muka</label>
-                        <div class="col-4">
-                            <input class="form-control uangs" id="uang_muka" type="text" value="0"
-                                name="uang_muka" id="example-text-input" />
-                        </div>
-
-                        &nbsp;
+                </div>
+                &nbsp;
+                <div class="form-group row">
+                    <label class="col-2 col-form-label">Resep dr./ref</label>
+                    <div class="col-4">
+                        <input class="form-control" type="text" value="" name="resep_dr"
+                            id="example-text-input" />
                     </div>
-                    <div class="form-group row">
-                        <label class="col-2 col-form-label"></label>
-                        <div class="col-4">
+                    <label class="col-2 col-form-label">Diskon</label>
+                    <div class="col-2">
+                        <input class="form-control uangs" id="diskon" type="text" value="0" name="diskon"
+                            id="example-text-input" />
+                        <p style="color: red">*) Tulis 0 jika tanpa diskon</p>
+                    </div>
+                    <div class="col-2">
+                        <input class="form-control" type="text" value="RP" id="example-text-input" disabled />
+                    </div>
 
-                        </div>
-                        <label class="col-2 col-form-label">Sisa</label>
-                        <div class="col-4">
-                            <input class="form-control uangs" id="sisa" type="text" value="0"
-                                name="sisa" id="example-text-input" />
-                        </div>
+                </div>
+                &nbsp;
+                <div class="form-group row">
+                    <label class="col-2 col-form-label">Lensa Kanan</label>
+                    <div class="col-4">
+                        <input class="form-control" disabled type="text" id="label_lensa" />
+                    </div>
+
+                    <label class="col-2 col-form-label">Jumlah</label>
+                    <div class="col-4">
+                        <input class="form-control uangs" id="jumlah" type="text" value="0" name="jumlah"
+                            id="example-text-input" readonly />
+                    </div>
+
+                </div>
+                &nbsp;
+                <div class="form-group row">
+
+                    <label class="col-2 col-form-label">Lensa Kiri</label>
+                    <div class="col-4">
+                        <input class="form-control" disabled type="text" id="label_lensa_kiri" />
+                    </div>
+                    <label class="col-2 col-form-label">Uang Muka</label>
+                    <div class="col-4">
+                        <input class="form-control uangs" id="uang_muka" type="text" value="0" name="uang_muka"
+                            id="example-text-input" />
                     </div>
 
                     &nbsp;
                 </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                    <a href="{{ route('transaksi.index') }}" class="btn btn-secondary">Cancel</a>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label">Frame</label>
+                    <div class="col-4">
+                        <input class="form-control" disabled type="text" id="label_frame" />
+                    </div>
+
+                    <label class="col-2 col-form-label">Sisa</label>
+                    <div class="col-4">
+                        <input class="form-control uangs" id="sisa" type="text" value="0" name="sisa"
+                            id="example-text-input" />
+                    </div>
                 </div>
-            </form>
+
+                &nbsp;
+
         </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+            <a href="{{ route('transaksi.index') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+        </form>
+    </div>
 
     </div>
 @endsection
@@ -382,11 +406,26 @@
             });
         });
 
-        $('#nama').on('input',function(){
+        $('#nama').on('input', function() {
             var nama = $(this).val();
             $('#label_nama').val(nama)
         })
 
+
+        $("#lensa_id_kiri").change(function() {
+
+            var selectedText = $("#lensa_id_kiri option:selected").text();
+            var selectedHarga = $("#lensa_id_kiri option:selected").data('harga');
+            var jumlahVal = $('#jumlah').val().replace(/,/g, '');
+            if (isNaN(parseFloat(jumlahVal))) {
+                jumlahVal = 0
+            }
+
+            var jumlah = parseFloat(jumlahVal) + parseFloat(selectedHarga);
+
+            $('#jumlah').val(jumlah.toFixed(2));
+            $("#label_lensa_kiri").val(selectedText);
+        });
 
         $("#lensa_id").change(function() {
 
@@ -425,22 +464,41 @@
             $('#label_tanggal').val(newValue); // Format the date (optional)
         });
 
-        $('#jumlah, #uang_muka').keyup(function() {
+        $('#jumlah, #diskon').change(function() {
+            var diskon = parseFloat($('#diskon').val().replace(/,/g, '')) || 0;
+            var jumlah = parseFloat($('#jumlah').val().replace(/,/g, '')) || 0;
+            var uang_muka = parseFloat($('#uang_muka').val().replace(/,/g, '')) || 0;
+
+            // Menghitung jumlah baru berdasarkan diskon dikurangi jumlah
+            var jumlahBaru = jumlah - diskon;
+
             // Menghitung total nilai
-            if (parseFloat($('#uang_muka').val().replace(/,/g, '')) > parseFloat($('#jumlah').val().replace(/,/g,
-                    ''))) {
+            var total = jumlahBaru - uang_muka;
 
-                $('#uang_muka').val($('#jumlah').val());
-            }
-            var diskon = $('#diskon').val();
-            var kurang_diskon = diskon / 100 * parseFloat($('#jumlah').val().replace(/,/g, ''));
+            // Menampilkan jumlah baru dan total di elemen dengan id "jumlah" dan "sisa"
+            $('#jumlah').val(jumlahBaru.toFixed(2));
 
-            var total = parseFloat($('#jumlah').val().replace(/,/g, '')) - kurang_diskon - parseFloat($(
-                '#uang_muka').val().replace(
-                /,/g, ''));
-            // Menampilkan total di elemen dengan id "total"
+        });
+        $('#jumlah, #uang_muka').change(function() {
+            var diskon = parseFloat($('#diskon').val().replace(/,/g, '')) || 0;
+            var jumlah = parseFloat($('#jumlah').val().replace(/,/g, '')) || 0;
+            var uang_muka = parseFloat($('#uang_muka').val().replace(/,/g, '')) || 0;
+
+            // Menghitung jumlah baru berdasarkan diskon dikurangi jumlah
+            // var jumlahBaru = jumlah - diskon;
+
+            // console.log('jumlah: ' + jumlah);
+            // console.log('diskon: ' + diskon);
+            // console.log('jumlahBaru: ' + jumlahBaru);
+
+            // Menghitung total nilai
+            var total = jumlah - uang_muka;
+
+            // Menampilkan jumlah baru dan total di elemen dengan id "jumlah" dan "sisa"
             $('#sisa').val(total.toFixed(2));
         });
+
+
 
         $('#kt_td_picker_date_only_input1').on('change', function(e) {
             console.log(e);

@@ -84,8 +84,11 @@
                                 <th class="min-w-200px">Tanggal</th>
                                 <th class="min-w-200px">Frame</th>
                                 <th class="min-w-200px">Harga Asli Frame</th>
-                                <th class="min-w-200px">Lensa</th>
-                                <th class="min-w-200px">Harga Asli Lensa</th>
+                                <th class="min-w-200px">Lensa Kanan</th>
+                                <th class="min-w-200px">Harga Asli Lensa Kanan</th>
+                                <th class="min-w-200px">Lensa Kiri</th>
+                                <th class="min-w-200px">Harga Asli Lensa Kiri</th>
+                                <th class="min-w-200px">Diskon</th>
                                 <th class="min-w-200px">Nama Cabang</th>
                                 <th class="min-w-200px">Jumlah</th>
                                 <th class="min-w-200px">No Telp</th>
@@ -117,6 +120,18 @@
                                     <td>
                                         <span
                                             class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ $val->lensa_harga }}</span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ $val->lensa_nama_kiri }}</span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ $val->lensa_kiri_harga }}</span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ $val->diskon }}</span>
                                     </td>
                                     <td>
                                         <span

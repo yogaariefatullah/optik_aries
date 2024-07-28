@@ -26,6 +26,10 @@ class RekapKeluarExport implements FromCollection, WithHeadings
             ->leftJoin('barang as lensa', function ($join) {
                 $join->on('rekap_barang_keluar.lensa', '=', 'lensa.id');
             })
+            ->leftJoin('barang as lensa_kiri', function ($join) {
+                $join->on('rekap_barang_keluar.lensa_id_kiri', '=', 'lensa_kiri.id')
+                    ->where('lensa_kiri.jenis', '=', 1);
+            })
             ->leftJoin('barang as frame', function ($join) {
                 $join->on('rekap_barang_keluar.frame', '=', 'frame.id');
             })
@@ -33,6 +37,7 @@ class RekapKeluarExport implements FromCollection, WithHeadings
             ->select(
                 'rekap_barang_keluar.tanggal',
                 'lensa.nama_barang as lensa',
+                'lensa_kiri.nama_barang as lensa_kiri',
                 'frame.nama_barang as frame',
                 'rekap_barang_keluar.jumlah',
                 'transaksi.no_telp',
@@ -67,6 +72,7 @@ class RekapKeluarExport implements FromCollection, WithHeadings
         return [
             'Tanggal',
             'Lensa',
+            'Lensa Kiri',
             'Frame',
             'Jumlah',
             'No Telp',
