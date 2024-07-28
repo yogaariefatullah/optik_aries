@@ -402,16 +402,6 @@
 @section('javascript')
     <script>
         $(document).ready(function() {
-            var frameSelect = $("#frame_id");
-            if (!frameSelect.val()) {
-                frameSelect.val("0").trigger('change');
-            }
-            var lensaSelect = $("#lensa_id");
-            if (!lensaSelect.val()) {
-                lensaSelect.val("0").trigger('change');
-            }
-        });
-        $(document).ready(function() {
 
             $('.floatInput').inputmask({
                 alias: 'decimal',
@@ -434,72 +424,121 @@
                 groupSeparator: ',',
                 rightAlign: false
             });
-        });
 
+            // Menyimpan nilai asli dari jumlah saat halaman dimuat
+            var originalJumlah = parseFloat($('#jumlah').val().replace(/,/g, '')) || 0;
+            $('#jumlah').data('original-jumlah', originalJumlah);
 
-        var previousHarga = 0;
+            var previousHargaLensaKiri = 0;
+            var previousHargaLensa = 0;
+            var previousHargaFrame = 0;
 
-        $("#lensa_id_kiri").change(function() {
-            var selectedText = $("#lensa_id_kiri option:selected").text();
-            var selectedHarga = $("#lensa_id_kiri option:selected").data('harga');
-            var jumlahVal = $('#jumlah').val().replace(/,/g, '');
+            function updateJumlah() {
+                var hargaLensaKiri = previousHargaLensaKiri;
+                var hargaLensa = previousHargaLensa;
+                var hargaFrame = previousHargaFrame;
 
-            if (isNaN(parseFloat(jumlahVal))) {
-                jumlahVal = 0;
+                // Ambil kembali nilai asli dari data
+                var originalJumlah = parseFloat($('#jumlah').data('original-jumlah')) || 0;
+
+                // Tambahkan atau kurangi nilai harga tergantung pada apakah mereka diubah menjadi 0 atau bukan
+                var newJumlah = hargaLensaKiri + hargaLensa + hargaFrame;
+
+                console.log("Harga Lensa Kiri: ", hargaLensaKiri);
+                console.log("Harga Lensa: ", hargaLensa);
+                console.log("Harga Frame: ", hargaFrame);
+                console.log("Original Jumlah: ", originalJumlah);
+                console.log("New Jumlah: ", newJumlah);
+
+                $('#jumlah').val(newJumlah.toFixed(2));
+                updateSisa(); // Update sisa after updating jumlah
             }
 
-            // Kurangi jumlah dengan previousHarga dan tambahkan selectedHarga baru
-            var jumlah = parseFloat(jumlahVal) - previousHarga + parseFloat(selectedHarga);
+            function updateSisa() {
+                var jumlah = parseFloat($('#jumlah').val().replace(/,/g, '')) || 0;
+                var uang_muka = parseFloat($('#uang_muka').val().replace(/,/g, '')) || 0;
+                var diskon = parseFloat($('#diskon').val().replace(/,/g, '')) || 0;
 
-            // Perbarui previousHarga dengan selectedHarga baru
-            previousHarga = parseFloat(selectedHarga);
+                var jumlahSetelahDiskon = jumlah - diskon;
+                var total = jumlahSetelahDiskon - uang_muka;
 
-            $('#jumlah').val(jumlah.toFixed(2));
-            $("#label_lensa_kiri").val(selectedText);
-        });
-
-
-        // Inisialisasi previousHarga untuk lensa dan frame
-        var previousHargaLensa = 0;
-        var previousHargaFrame = 0;
-
-        $("#lensa_id").change(function() {
-            var selectedText = $("#lensa_id option:selected").text();
-            var selectedHarga = $("#lensa_id option:selected").data('harga');
-            var jumlahVal = $('#jumlah').val().replace(/,/g, '');
-
-            if (isNaN(parseFloat(jumlahVal))) {
-                jumlahVal = 0;
+                // Menampilkan total di elemen dengan id "sisa"
+                $('#sisa').val(total.toFixed(2));
             }
 
-            // Kurangi jumlah dengan previousHargaLensa dan tambahkan selectedHarga baru
-            var jumlah = parseFloat(jumlahVal) - previousHargaLensa + parseFloat(selectedHarga);
+            $("#lensa_id_kiri").change(function() {
+                var selectedText = $("#lensa_id_kiri option:selected").text();
+                var selectedHarga = parseFloat($("#lensa_id_kiri option:selected").data('harga')) || 0;
 
-            // Perbarui previousHargaLensa dengan selectedHarga baru
-            previousHargaLensa = parseFloat(selectedHarga);
+                // Perbarui original jumlah sebelum memperbarui previousHargaLensaKiri
+                var originalJumlah = parseFloat($('#jumlah').data('original-jumlah')) || 0;
+                originalJumlah -= previousHargaLensaKiri;
+                $('#jumlah').data('original-jumlah', originalJumlah);
 
-            $('#jumlah').val(jumlah.toFixed(2));
-            $("#label_lensa").val(selectedText);
-        });
+                // Perbarui previousHargaLensaKiri dengan selectedHarga baru
+                previousHargaLensaKiri = selectedHarga;
 
-        $("#frame_id").change(function() {
-            var selectedText = $("#frame_id option:selected").text();
-            var selectedHarga = $("#frame_id option:selected").data('harga');
-            var jumlahVal = $('#jumlah').val().replace(/,/g, '');
+                updateJumlah();
+                $("#label_lensa_kiri").val(selectedText);
+            });
 
-            if (isNaN(parseFloat(jumlahVal))) {
-                jumlahVal = 0;
+            $("#lensa_id").change(function() {
+                var selectedText = $("#lensa_id option:selected").text();
+                var selectedHarga = parseFloat($("#lensa_id option:selected").data('harga')) || 0;
+
+                // Perbarui original jumlah sebelum memperbarui previousHargaLensa
+                var originalJumlah = parseFloat($('#jumlah').data('original-jumlah')) || 0;
+                originalJumlah -= previousHargaLensa;
+                $('#jumlah').data('original-jumlah', originalJumlah);
+
+                // Perbarui previousHargaLensa dengan selectedHarga baru
+                previousHargaLensa = selectedHarga;
+
+                updateJumlah();
+                $("#label_lensa").val(selectedText);
+            });
+
+            $("#frame_id").change(function() {
+                var selectedText = $("#frame_id option:selected").text();
+                var selectedHarga = parseFloat($("#frame_id option:selected").data('harga')) || 0;
+
+                // Perbarui original jumlah sebelum memperbarui previousHargaFrame
+                var originalJumlah = parseFloat($('#jumlah').data('original-jumlah')) || 0;
+                originalJumlah -= previousHargaFrame;
+                $('#jumlah').data('original-jumlah', originalJumlah);
+
+                // Perbarui previousHargaFrame dengan selectedHarga baru
+                previousHargaFrame = selectedHarga;
+
+                updateJumlah();
+                $("#label_frame").val(selectedText);
+            });
+
+            $('#diskon').change(function() {
+                updateJumlah(); // Ensure the original amount is recalculated
+            });
+
+            $('#uang_muka').change(function() {
+                updateSisa();
+            });
+
+            // Trigger changes on initial load to set default values
+            var frameSelect = $("#frame_id");
+            if (!frameSelect.val()) {
+                frameSelect.val("0").trigger('change');
             }
-
-            // Kurangi jumlah dengan previousHargaFrame dan tambahkan selectedHarga baru
-            var jumlah = parseFloat(jumlahVal) - previousHargaFrame + parseFloat(selectedHarga);
-
-            // Perbarui previousHargaFrame dengan selectedHarga baru
-            previousHargaFrame = parseFloat(selectedHarga);
-
-            $('#jumlah').val(jumlah.toFixed(2));
-            $("#label_frame").val(selectedText);
+            var lensaSelect = $("#lensa_id");
+            if (!lensaSelect.val()) {
+                lensaSelect.val("0").trigger('change');
+            }
+            var lensaKiriSelect = $("#lensa_id_kiri");
+            if (!lensaKiriSelect.val()) {
+                lensaKiriSelect.val("0").trigger('change');
+            }
         });
+
+
+
 
         $('#nama').on('input', function() {
             var nama = $(this).val();
@@ -514,39 +553,7 @@
             $('#label_tanggal').val(newValue); // Format the date (optional)
         });
 
-        $('#jumlah, #diskon').change(function() {
-            var diskon = parseFloat($('#diskon').val().replace(/,/g, '')) || 0;
-            var jumlah = parseFloat($('#jumlah').val().replace(/,/g, '')) || 0;
-            var uang_muka = parseFloat($('#uang_muka').val().replace(/,/g, '')) || 0;
 
-            // Menghitung jumlah baru berdasarkan diskon dikurangi jumlah
-            var jumlahBaru = jumlah - diskon;
-
-            // Menghitung total nilai
-            var total = jumlahBaru - uang_muka;
-
-            // Menampilkan jumlah baru dan total di elemen dengan id "jumlah" dan "sisa"
-            $('#jumlah').val(jumlahBaru.toFixed(2));
-
-        });
-        $('#jumlah, #uang_muka').change(function() {
-            var diskon = parseFloat($('#diskon').val().replace(/,/g, '')) || 0;
-            var jumlah = parseFloat($('#jumlah').val().replace(/,/g, '')) || 0;
-            var uang_muka = parseFloat($('#uang_muka').val().replace(/,/g, '')) || 0;
-
-            // Menghitung jumlah baru berdasarkan diskon dikurangi jumlah
-            // var jumlahBaru = jumlah - diskon;
-
-            // console.log('jumlah: ' + jumlah);
-            // console.log('diskon: ' + diskon);
-            // console.log('jumlahBaru: ' + jumlahBaru);
-
-            // Menghitung total nilai
-            var total = jumlah - uang_muka;
-
-            // Menampilkan jumlah baru dan total di elemen dengan id "jumlah" dan "sisa"
-            $('#sisa').val(total.toFixed(2));
-        });
 
         $('#kt_td_picker_date_only_input1').on('change', function(e) {
             console.log(e);
