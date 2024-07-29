@@ -37,10 +37,14 @@ class RekapKeluarExport implements FromCollection, WithHeadings
             ->select(
                 'rekap_barang_keluar.tanggal',
                 'lensa.nama_barang as lensa',
+                'lensa.harga_asli as lensa_harga',
                 'lensa_kiri.nama_barang as lensa_kiri',
+                'lensa_kiri.harga_asli as lensa_kiri_kiri',
                 'frame.nama_barang as frame',
+                'frame.harga_asli as frame_harga',
                 'rekap_barang_keluar.jumlah',
                 'transaksi.no_telp',
+                'transaksi.diskon',
                 'rekap_barang_keluar.keterangan'
             );
 
@@ -72,10 +76,14 @@ class RekapKeluarExport implements FromCollection, WithHeadings
         return [
             'Tanggal',
             'Lensa',
+            'Harga Asli Lensa Kanan',
             'Lensa Kiri',
+            'Harga Asli Lensa Kiri',
             'Frame',
+            'Harga Asli Frame',
             'Jumlah',
             'No Telp',
+            'Diskon',
             'Keterangan',
         ];
     }

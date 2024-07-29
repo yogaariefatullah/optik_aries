@@ -175,41 +175,41 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><label>{{ $transaksi->spher_od }}</label></td>
-                    <td><label>{{ $transaksi->cylders_od }}</label></td>
-                    <td><label>{{ $transaksi->axis_od }}</label></td>
-                    <td><label>{{ $transaksi->prism_od }}</label></td>
-                    <td><label>{{ $transaksi->base_od }}</label></td>
+                    <td><label>{{ number_format($transaksi->spher_od, 2, '.', '') }}</label></td>
+                    <td><label>{{ number_format($transaksi->cylders_od, 2, '.', '') }}</label></td>
+                    <td><label>{{  number_format($transaksi->axis_od, 2, '.', '')  }}</label></td>
+                    <td><label>{{ number_format($transaksi->prism_od, 2, '.', '') }}</label></td>
+                    <td><label>{{ number_format($transaksi->base_od, 2, '.', '')  }}</label></td>
                     <!-- atas od bawah os -->
-                    <td><label>{{ $transaksi->spher_os }}</label></td>
-                    <td><label>{{ $transaksi->cylders_os }}</label></td>
-                    <td><label>{{ $transaksi->axis_os }}</label></td>
-                    <td><label>{{ $transaksi->prism_os }}</label></td>
-                    <td><label>{{ $transaksi->base_os }}</label></td>
+                    <td><label>{{ number_format($transaksi->spher_os, 2, '.', '') }}</label></td>
+                    <td><label>{{ number_format($transaksi->cylders_os, 2, '.', '') }}</label></td>
+                    <td><label>{{ number_format($transaksi->axis_os, 2, '.', '') }}</label></td>
+                    <td><label>{{ number_format($transaksi->prism_os, 2, '.', '') }}</label></td>
+                    <td><label>{{ number_format($transaksi->base_os, 2, '.', '') }}</label></td>
                 </tr>
                 <tr>
                     <td colspan="3">
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Add</label>
-                            <label class="col-8 col-form-label">{{ $transaksi->add_od }}</label>
+                            <label class="col-8 col-form-label">{{ number_format($transaksi->add_od, 2, '.', '')  }}</label>
                         </div>
                     </td>
                     <td colspan="2">
                         <div class="form-group row">
                             <label class="col-4 col-form-label">PD</label>
-                            <label class="col-8 col-form-label">{{ $transaksi->pd_od }}</label>
+                            <label class="col-8 col-form-label">{{ number_format($transaksi->pd_od, 2, '.', '') }}</label>
                         </div>
                     </td>
                     <td colspan="2">
                         <div class="form-group row">
                             <label class="col-4 col-form-label">T.Seg.</label>
-                            <label class="col-8 col-form-label">{{ $transaksi->tseg_os }}</label>
+                            <label class="col-8 col-form-label">{{ number_format($transaksi->tseg_os, 2, '.', '')  }}</label>
                         </div>
                     </td>
                     <td colspan="3">
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Add</label>
-                            <label class="col-8 col-form-label">{{ $transaksi->add_os }}</label>
+                            <label class="col-8 col-form-label">{{ number_format($transaksi->add_os, 2, '.', '') }}</label>
                         </div>
                     </td>
 
@@ -312,8 +312,8 @@
         </div>
 
         <div class="form-group row">
-         
-            
+
+
             <label class="col-2 col-form-label">Lensa Kiri : </label>
             <label class="col-4 col-form-label">{{ $text_lensa_kiri ? $text_lensa->nama_barang : 'Pribadi' }}</label>
             <label class="col-2 col-form-label">Uang Muka : </label>
