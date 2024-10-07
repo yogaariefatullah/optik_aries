@@ -52,6 +52,7 @@ class TransaksiController extends Controller
             })
             ->select(
                 'transaksi.id',
+                'transaksi.status_pelunasan',
                 'transaksi.nama',
                 'transaksi.no_transaksi',
                 'transaksi.resep_dr',
@@ -198,13 +199,14 @@ class TransaksiController extends Controller
     public function edit($id)
     {
         $data['nama_menu'] = 'Transaksi';
-        $data['data_lensa'] = Barang::where('jenis', 1)->where('jumlah_stok', '>', 0)->where('cabang', Auth::user()->cabang_id)->get();
-        $data['data_frame'] = Barang::where('jenis', 2)->where('jumlah_stok', '>', 0)->where('cabang', Auth::user()->cabang_id)->get();
+        $data['data_lensa'] = Barang::where('jenis', 1)->where('cabang', Auth::user()->cabang_id)->get();
+        $data['data_frame'] = Barang::where('jenis', 2)->where('cabang', Auth::user()->cabang_id)->get();
         // $data['no_transaksi'] = Transaksi::where('id_cabang',Auth::user()->cabang_id)->max('no_transaksi');
         $data['transaksi'] = Transaksi::find($id);
         $data['text_lensa'] = Barang::where('id', $data['transaksi']->lensa_id)->first();
         $data['text_lensa_kiri'] = Barang::where('id', $data['transaksi']->lensa_id_kiri)->first();
         $data['text_frame'] = Barang::where('id', $data['transaksi']->frame_id)->first();
+        // dd(Auth::user()->cabang_id);
 
 
 
@@ -322,6 +324,22 @@ class TransaksiController extends Controller
         $transaksi->delete();
 
         return redirect()->route('transaksi.index')->with('success', 'Data Berhasil di Hapus.');
+    }
+    public function statusPelunasan($id)
+    {
+        $transaksi = Transaksi::where('id', $id)->first();
+        // dd($transaksi);
+        if ($transaksi->status_pelunasan == null || $transaksi->status_pelunasan == 0) {
+            Transaksi::where('id', $id)->update([
+                'status_pelunasan' => 1
+            ]);
+        } else {
+            Transaksi::where('id', $id)->update([
+                'status_pelunasan' => 0
+            ]);
+        }
+
+        return redirect()->route('transaksi.index')->with('success', 'Data Berhasil di Ubah.');
     }
     public function print($id)
     {

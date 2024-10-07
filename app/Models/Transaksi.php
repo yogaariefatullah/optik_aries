@@ -53,6 +53,7 @@ class Transaksi extends Authenticatable
         'sisa',
         'no_transaksi',
         'id_cabang',
-        'diskon'
+        'diskon',
+        'status_pelunasan'
     ];
 }

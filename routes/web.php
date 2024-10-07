@@ -39,6 +39,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('rekap-barang-keluar', 'RekapBarangKeluarController');
     Route::post('rekap-barang-keluar/export-excel', 'RekapBarangKeluarController@excels')->name('rekap-barang-keluar.excels');
     Route::resource('transaksi', 'TransaksiController');
+    Route::post('transaksi/status-pelunasan/{id}', 'TransaksiController@statusPelunasan')->name('transaksi.status.pelunasan');
     Route::get('/transaksi/print/{id}','TransaksiController@print')->name('transaksi.print');
 });
 
