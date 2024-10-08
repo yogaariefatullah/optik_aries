@@ -59,7 +59,56 @@ class TransaksiController extends Controller
                 'lensa.nama_barang as lensa_nama',
                 'lensa_kiri.nama_barang as lensa_kiri',
                 'frame.nama_barang as frame_nama'
-            );
+            )->where(function ($query) {
+                $query->where('transaksi.status_pelunasan', '!=', 1)
+                    ->orWhereNull('transaksi.status_pelunasan');
+            });
+
+        if ($request->has('search')) {
+            $searchTerm = '%' . strtolower($request->input('search')) . '%';
+            $query->where(function ($query) use ($searchTerm) {
+                $query->whereRaw('LOWER(lensa.nama_barang) LIKE ?', [$searchTerm])
+                    ->orwhereRaw('LOWER(frame.nama_barang) LIKE ?', [$searchTerm])
+                    ->orwhereRaw('LOWER(transaksi.nama) LIKE ?', [$searchTerm])
+                    ->orwhereRaw('LOWER(transaksi.no_transaksi) LIKE ?', [$searchTerm])
+                    ->orwhereRaw('LOWER(transaksi.no_telp) LIKE ?', [$searchTerm])
+                    ->orwhereRaw('LOWER(transaksi.resep_dr) LIKE ?', [$searchTerm]);
+            });
+        }
+
+        // Ambil data subjek dengan paginate
+        $data['transaksi'] = $query->where('transaksi.id_cabang', Auth::user()->cabang_id)->paginate(5);
+
+        return view('transaksi.index', $data);
+    }
+
+    public function pelunasan(Request $request)
+    {
+
+        $data['nama_menu'] = 'Transaksi';
+
+        $query = Transaksi::leftJoin('barang as lensa', function ($join) {
+            $join->on('transaksi.lensa_id', '=', 'lensa.id')
+                ->where('lensa.jenis', '=', 1);
+        })
+            ->leftJoin('barang as frame', function ($join) {
+                $join->on('transaksi.frame_id', '=', 'frame.id')
+                    ->where('frame.jenis', '=', 2);
+            })
+            ->leftJoin('barang as lensa_kiri', function ($join) {
+                $join->on('transaksi.lensa_id_kiri', '=', 'lensa_kiri.id')
+                    ->where('lensa_kiri.jenis', '=', 1);
+            })
+            ->select(
+                'transaksi.id',
+                'transaksi.status_pelunasan',
+                'transaksi.nama',
+                'transaksi.no_transaksi',
+                'transaksi.resep_dr',
+                'lensa.nama_barang as lensa_nama',
+                'lensa_kiri.nama_barang as lensa_kiri',
+                'frame.nama_barang as frame_nama'
+            )->where('transaksi.status_pelunasan', 1);
 
         if ($request->has('search')) {
             $searchTerm = '%' . strtolower($request->input('search')) . '%';
@@ -199,10 +248,36 @@ class TransaksiController extends Controller
     public function edit($id)
     {
         $data['nama_menu'] = 'Transaksi';
-        $data['data_lensa'] = Barang::where('jenis', 1)->where('cabang', Auth::user()->cabang_id)->get();
-        $data['data_frame'] = Barang::where('jenis', 2)->where('cabang', Auth::user()->cabang_id)->get();
+        $data['transaksi'] = Transaksi::find($id);  // Ambil transaksi berdasarkan ID
+        $data['data_lensa'] = Barang::where('jenis', 1)
+            ->where('jumlah_stok', '>', 0)
+            ->where('cabang', Auth::user()->cabang_id)
+            ->get();
+
+        // Cek apakah lensa dari transaksi ada di daftar $data_lensa
+        $lensa_id = $data['transaksi']->lensa_id;
+        if (!$data['data_lensa']->pluck('id')->contains($lensa_id)) {
+            // Jika lensa_id dari transaksi tidak ada di $data_lensa, cari langsung dari tabel Barang
+            $data['lensa_habis'] = Barang::find($lensa_id);
+        }
+
+        $lensa_id_kiri = $data['transaksi']->lensa_id_kiri;
+        if (!$data['data_lensa']->pluck('id')->contains($lensa_id_kiri)) {
+            // Jika lensa_id_kiri dari transaksi tidak ada di $data_lensa, cari langsung dari tabel Barang
+            $data['lensa_kiri_habis'] = Barang::find($lensa_id_kiri);
+        }
         // $data['no_transaksi'] = Transaksi::where('id_cabang',Auth::user()->cabang_id)->max('no_transaksi');
-        $data['transaksi'] = Transaksi::find($id);
+
+
+        $data['data_frame'] = Barang::where('jenis', 2)
+            ->where('jumlah_stok', '>', 0)
+            ->where('cabang', Auth::user()->cabang_id)
+            ->get();
+        $frame_id = $data['transaksi']->frame_id;
+        if (!$data['data_frame']->pluck('id')->contains($frame_id)) {
+            // Jika frame_id dari transaksi tidak ada di $data_frame, cari langsung dari tabel Barang
+            $data['frame_habis'] = Barang::find($frame_id);
+        }
         $data['text_lensa'] = Barang::where('id', $data['transaksi']->lensa_id)->first();
         $data['text_lensa_kiri'] = Barang::where('id', $data['transaksi']->lensa_id_kiri)->first();
         $data['text_frame'] = Barang::where('id', $data['transaksi']->frame_id)->first();
@@ -222,32 +297,57 @@ class TransaksiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $lensa_old = $request->lensa_old;
-        $frame_old = $request->frame_old;
-        if ($request->lensa_id != $lensa_old) {
-            $stock_old = Barang::where('id', $lensa_old)->first();
-            Barang::where('id', $lensa_old)->update([
-                'jumlah_stok' => $stock_old->jumlah_stok + 1
-            ]);
 
+        $transaksi = Transaksi::find($id);
+        $frame_old = $transaksi->frame_id;
+        $frame_new = $request->frame_id;
 
-            Barang::where('id', $request->lensa_id)->update([
-                'jumlah_stok' => $stock_old->jumlah_stok - 1
-            ]);
+        $lensa_old = $transaksi->lensa_id;  // Lensa ID sebelum di-edit
+        $lensa_new = $request->lensa_id;    // Lensa ID setelah di-edit
+        // $frame_old = $request->frame_old;
+        if ($lensa_new != $lensa_old) {
+            // Pengembalian stok lensa lama (lensa_old)
+            if (!is_null($lensa_old)) {
+                $stock_old = Barang::where('id', $lensa_old)->first();
+                if ($stock_old) {
+                    Barang::where('id', $lensa_old)->update([
+                        'jumlah_stok' => $stock_old->jumlah_stok + 1  // Tambah stok karena lensa lama dikembalikan
+                    ]);
+                }
+            }
+
+            // Pengurangan stok lensa baru (lensa_new)
+            if (!is_null($lensa_new)) {
+                $stock_new = Barang::where('id', $lensa_new)->first();
+                if ($stock_new && $stock_new->jumlah_stok > 0) {
+                    Barang::where('id', $lensa_new)->update([
+                        'jumlah_stok' => $stock_new->jumlah_stok - 1  // Kurangi stok karena lensa baru dipilih
+                    ]);
+                }
+            }
         }
+        // Frame ID setelah di-edit
+        if ($frame_new != $frame_old) {
+            // Pengembalian stok frame lama (frame_old)
+            if (!is_null($frame_old)) {
+                $stock_old = Barang::where('id', $frame_old)->first();
+                if ($stock_old) {
+                    Barang::where('id', $frame_old)->update([
+                        'jumlah_stok' => $stock_old->jumlah_stok + 1  // Tambah stok karena frame lama dikembalikan
+                    ]);
+                }
+            }
 
-
-        if ($request->frame_id != $frame_old) {
-            $stock_old = Barang::where('id', $frame_old)->first();
-            Barang::where('id', $frame_old)->update([
-                'jumlah_stok' => $stock_old->jumlah_stok + 1
-            ]);
-
-            Barang::where('id', $request->frame_id)->update([
-                'jumlah_stok' => $stock_old->jumlah_stok - 1
-            ]);
+            // Pengurangan stok frame baru (frame_new)
+            if (!is_null($frame_new)) {
+                $stock_new = Barang::where('id', $frame_new)->first();
+                if ($stock_new && $stock_new->jumlah_stok > 0) {
+                    Barang::where('id', $frame_new)->update([
+                        'jumlah_stok' => $stock_new->jumlah_stok - 1  // Kurangi stok karena frame baru dipilih
+                    ]);
+                }
+            }
         }
-
         Transaksi::where('id', $id)->update([
             'spher_od' => $request->spher_od,
             'cylders_od' => $request->cylders_od,

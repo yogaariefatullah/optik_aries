@@ -158,7 +158,9 @@
                                             <select name="lensa_id" id="lensa_id" aria-label="Pilih lensa"
                                                 data-control="select2" data-placeholder="Pilih lensa..."
                                                 class="form-select form-select-solid form-select-lg fw-semibold">
+
                                                 <option value="">Pilih lensa</option>
+
                                                 @foreach ($data_lensa as $key => $value)
                                                     <option data-harga="{{ $value->harga_jual }}"
                                                         value="{{ $value->id }}"
@@ -166,11 +168,22 @@
                                                         {{ $value->nama_barang }}
                                                     </option>
                                                 @endforeach
+
+                                                <!-- Tampilkan lensa yang stoknya habis jika ada -->
+                                                @if (isset($lensa_habis))
+                                                    <option data-harga="{{ $lensa_habis->harga_jual }}"
+                                                        value="{{ $lensa_habis->id }}" selected>
+                                                        {{ $lensa_habis->nama_barang }} (stok habis)
+                                                    </option>
+                                                @endif
+
+                                                <!-- Opsi 'Pribadi' -->
                                                 <option data-harga="0" value="pribadi"
-                                                    {{ is_null($transaksi->lensa_id) || $transaksi->lensa_id == '' ? 'selected' : '' }}>
+                                                    {{ $transaksi->lensa_id == 'pribadi' || is_null($transaksi->lensa_id) ? 'selected' : '' }}>
                                                     Pribadi
                                                 </option>
                                             </select>
+
                                         </div>
                                         <label class="col-2 col-form-label">Order Tanggal</label>
                                         <div class="col-4">
@@ -198,7 +211,9 @@
                                             <select name="lensa_id_kiri" id="lensa_id_kiri" aria-label="Pilih Lensa"
                                                 data-control="select2" data-placeholder="Pilih Lensa..."
                                                 class="form-select form-select-solid form-select-lg fw-semibold">
+
                                                 <option value="">Pilih lensa</option>
+
                                                 @foreach ($data_lensa as $key => $value)
                                                     <option data-harga="{{ $value->harga_jual }}"
                                                         value="{{ $value->id }}"
@@ -206,11 +221,22 @@
                                                         {{ $value->nama_barang }}
                                                     </option>
                                                 @endforeach
+
+                                                <!-- Tampilkan lensa yang stoknya habis jika ada -->
+                                                @if (isset($lensa_kiri_habis))
+                                                    <option data-harga="{{ $lensa_kiri_habis->harga_jual }}"
+                                                        value="{{ $lensa_kiri_habis->id }}" selected>
+                                                        {{ $lensa_kiri_habis->nama_barang }} (stok habis)
+                                                    </option>
+                                                @endif
+
+                                                <!-- Opsi 'Pribadi' -->
                                                 <option data-harga="0" value="pribadi"
-                                                    {{ is_null($transaksi->lensa_id_kiri) || $transaksi->lensa_id_kiri == '' ? 'selected' : '' }}>
+                                                    {{ $transaksi->lensa_id_kiri == 'pribadi' || is_null($transaksi->lensa_id_kiri) ? 'selected' : '' }}>
                                                     Pribadi
                                                 </option>
                                             </select>
+
                                         </div>
                                     </div>
                                 </td>
@@ -224,7 +250,9 @@
                                             <select name="frame_id" id="frame_id" aria-label="Pilih Frame"
                                                 data-control="select2" data-placeholder="Pilih Frame..."
                                                 class="form-select form-select-solid form-select-lg fw-semibold">
+
                                                 <option value="">Pilih Frame</option>
+
                                                 @foreach ($data_frame as $key => $value)
                                                     <option data-harga="{{ $value->harga_jual }}"
                                                         value="{{ $value->id }}"
@@ -232,11 +260,23 @@
                                                         {{ $value->nama_barang }}
                                                     </option>
                                                 @endforeach
+
+                                                <!-- Tampilkan frame yang stoknya habis jika ada -->
+                                                @if (isset($frame_habis))
+                                                    <option data-harga="{{ $frame_habis->harga_jual }}"
+                                                        value="{{ $frame_habis->id }}" selected>
+                                                        {{ $frame_habis->nama_barang }} (stok habis)
+                                                    </option>
+                                                @endif
+
+                                                <!-- Opsi 'Pribadi' -->
                                                 <option data-harga="0" value="pribadi"
-                                                    {{ is_null($transaksi->frame_id) || $transaksi->frame_id == '' ? 'selected' : '' }}>
+                                                    {{ $transaksi->frame_id == 'pribadi' || is_null($transaksi->frame_id) ? 'selected' : '' }}>
                                                     Pribadi
                                                 </option>
                                             </select>
+
+
                                         </div>
                                         <label class="col-2 col-form-label">Tanggal Selesai</label>
                                         <div class="col-4">

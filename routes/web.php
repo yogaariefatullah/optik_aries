@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('transaksi', 'TransaksiController');
     Route::post('transaksi/status-pelunasan/{id}', 'TransaksiController@statusPelunasan')->name('transaksi.status.pelunasan');
     Route::get('/transaksi/print/{id}','TransaksiController@print')->name('transaksi.print');
+    Route::get('/pelunasan','TransaksiController@Pelunasan')->name('transaksi.print');
 });
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
